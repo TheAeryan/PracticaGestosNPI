@@ -1,5 +1,8 @@
 #include "stdafx.h"
 #include "ApiGestos.h"
+#include "model3D.h"
+#include <cmath>
+
 
 /* MANO */
 
@@ -26,6 +29,12 @@ void Mano::setPos(float pos_mano, float pos_cintura, float pos_cabeza, float alf
 		pos = PosicionMano::ENMEDIO;
 	else
 		pos = PosicionMano::ARRIBA;
+}
+
+void Mano::setXYZ(CameraSpacePoint pos_camara) {
+	X = pos_camara.X;
+	Y = pos_camara.Y;
+	Z = pos_camara.Z;
 }
 
 /* DIAGRAMA ESTADOS */
@@ -102,5 +111,24 @@ void AutomataEstados::transicionEstado(Mano mano_izquierda, Mano mano_derecha) {
 			// Vuelvo a aplicar una transición en caso de ser necesario
 			transicionEstado(mano_izquierda, mano_derecha);
 		}
+	}
+}
+
+/* ACCIONES GESTOS */
+
+void AccionGestoDesplazar::continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva) {
+	// Calculo la distancia en el plano XY entre la posición nueva de la mano derecha y la antigua
+	float desp_x = mano_der_nueva.getX() - mano_der.getX();
+	float desp_y = mano_der_nueva.getY() - mano_der.getY();
+
+	float desp_xy = sqrt(desp_x * desp_x + desp_y * desp_y);
+
+	// Si el desplazamiento es mayor que el umbral, ejecuto la acción Desplazar de la interfaz
+	// y guardo las nuevas posiciones de las manos. Si no, no hago nada.
+	if (desp_xy > umbral_desp) {
+		mano_izd = mano_izd_nueva;
+		mano_der = mano_der_nueva;
+
+		interfaz_grafica.desplazar(desp_x, desp_y);
 	}
 }

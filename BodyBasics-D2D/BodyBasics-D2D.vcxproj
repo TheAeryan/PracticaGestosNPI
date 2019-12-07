@@ -21,6 +21,7 @@
   <ItemGroup>
     <ClCompile Include="ApiGestos.cpp" />
     <ClCompile Include="BodyBasics.cpp" />
+    <ClCompile Include="model3D.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="app.ico" />
