@@ -19,6 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ApiGestos.cpp" />
     <ClCompile Include="BodyBasics.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -28,7 +29,9 @@
     <ResourceCompile Include="BodyBasics.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ApiGestos.h" />
     <ClInclude Include="BodyBasics.h" />
+    <ClInclude Include="model3D.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
   </ItemGroup>

@@ -67,10 +67,6 @@ CBodyBasics::CBodyBasics() :
     {
         m_fFreq = double(qpf.QuadPart);
     }
-
-	// Inicializo la posición y estado de las manos
-	leftHandPos = rightHandPos = { 0,0,0 };
-	leftHandClosed = rightHandClosed = false;
 }
   
 
@@ -355,39 +351,104 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
 
                         pBody->get_HandLeftState(&leftHandState);
                         pBody->get_HandRightState(&rightHandState);
-
-						// Guardo el estado de las manos
-						switch (leftHandState) {
-							case 2: // Abierta
-								leftHandClosed = false;
-								break;
-							case 3: // Cerrada
-								leftHandClosed = true;
-								break;
-						}
-							
-						switch (rightHandState) {
-						case 2: // Abierta
-							rightHandClosed = false;
-							break;
-						case 3: // Cerrada
-							rightHandClosed = true;
-							break;
-						}
-
-						// Guardo la posición de las manos si sé con 
-						// certeza donde se encuentran en este momento
 						hr = pBody->GetJoints(_countof(joints), joints);
 
-						if (leftHandState > 1) // Si vale 0 o 1, el estado de la mano es desconocido o inferido
-							leftHandPos = joints[JointType_HandLeft].Position;
+						// <Guardo el estado de las manos>
 
-						if (rightHandState > 1)
-							rightHandPos = joints[JointType_HandRight].Position;
-  
-						// PARA CONSIDERAR QUE LAS MANOS ESTÁN LEVANTADAS, SU POSICION Y
-						// TIENE QUE SER MAYOR QUE joints[JointType_SpineMid].Position.Y
+						mano_izd.setEstado(leftHandState, joints[JointType_HandLeft].TrackingState);
+						mano_der.setEstado(rightHandState, joints[JointType_HandRight].TrackingState);
 
+						// <Guardo la posición de las manos>
+
+
+						float pos_mano_izd = joints[JointType_HandLeft].Position.Y;
+						float pos_mano_der = joints[JointType_HandRight].Position.Y;
+						float pos_cintura = joints[JointType_SpineMid].Position.Y;
+						float pos_cabeza = joints[JointType_Head].Position.Y;
+						float alfa = 0;
+
+						mano_izd.setPos(pos_mano_izd, pos_cintura, pos_cabeza, alfa);
+						mano_der.setPos(pos_mano_der, pos_cintura, pos_cabeza, alfa);
+
+						// <Ejecuto la transición de estado correspondiente>
+
+						automata_estados.transicionEstado(mano_izd, mano_der);
+
+						// <Muestro el texto abajo de la ventana con la información del estado>
+
+						WCHAR szStatusMessage[512];
+
+						if (!m_nStartTime)
+						{
+							m_nStartTime = nTime;
+						}
+
+						double fps = 0.0;
+
+						LARGE_INTEGER qpcNow = { 0 };
+						if (m_fFreq)
+						{
+							if (QueryPerformanceCounter(&qpcNow))
+							{
+								if (m_nLastCounter)
+								{
+									m_nFramesSinceUpdate++;
+									fps = m_fFreq * m_nFramesSinceUpdate / double(qpcNow.QuadPart - m_nLastCounter);
+								}
+							}
+						}
+
+						// Imprimo aparte de los fps y el tiempo, el estado y posición de las manos
+							/*StringCchPrintf(szStatusMessage, _countof(szStatusMessage), L" FPS = %0.2f - \
+					<Mano Izquierda>  Pos: %.2f, %.2f, %.2f  Cerrada: %d - <Mano Derecha>  Pos: %.2f, %.2f, %.2f  Cerrada: %d",
+					fps, leftHandPos.X, leftHandPos.Y, leftHandPos.Z, leftHandClosed,
+					rightHandPos.X, rightHandPos.Y, rightHandPos.Z, rightHandClosed);*/
+
+					// Imprimo el estado en el que se encuentra el sistema y las manos
+
+						EstadoGestos estado_actual = automata_estados.getEstado();
+						TCHAR* str_estado_actual;
+
+						if (estado_actual == EstadoGestos::ESTADO_INICIAL)
+							str_estado_actual = TEXT("ESTADO_INICIAL");
+						else if (estado_actual == EstadoGestos::GESTO_CAMBIAR_ANIO)
+							str_estado_actual = TEXT("GESTO_CAMBIAR_ANIO");
+						else if (estado_actual == EstadoGestos::GESTO_DESPLAZAR)
+							str_estado_actual = TEXT("GESTO_DESPLAZAR");
+						else if (estado_actual == EstadoGestos::GESTO_ROTAR)
+							str_estado_actual = TEXT("GESTO_ROTAR");
+						else if (estado_actual == EstadoGestos::GESTO_ZOOM)
+							str_estado_actual = TEXT("GESTO_ZOOM");
+
+						EstadoMano estado_mano_izd = mano_izd.getEstado();
+						EstadoMano estado_mano_der = mano_der.getEstado();
+
+						TCHAR* str_estado_mano_izd, * str_estado_mano_der;
+
+						if (estado_mano_izd == EstadoMano::ABIERTA)
+							str_estado_mano_izd = TEXT("ABIERTA");
+						else if (estado_mano_izd == EstadoMano::CERRADA)
+							str_estado_mano_izd = TEXT("CERRADA");
+						else
+							str_estado_mano_izd = TEXT("NT");
+
+						if (estado_mano_der == EstadoMano::ABIERTA)
+							str_estado_mano_der = TEXT("ABIERTA");
+						else if (estado_mano_der == EstadoMano::CERRADA)
+							str_estado_mano_der = TEXT("CERRADA");
+						else
+							str_estado_mano_der = TEXT("NT");
+
+
+						StringCchPrintf(szStatusMessage, _countof(szStatusMessage), L" FPS = %0.2f - \
+EstadoGesto=%s - EstadoManos: Izda=%s, Der=%s", fps, str_estado_actual, str_estado_mano_izd,
+str_estado_mano_der);
+
+						if (SetStatusMessage(szStatusMessage, 250, false))
+						{
+							m_nLastCounter = qpcNow.QuadPart;
+							m_nFramesSinceUpdate = 0;
+						}
 
                         if (SUCCEEDED(hr))
                         {
@@ -414,45 +475,6 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
                 hr = S_OK;
                 DiscardDirect2DResources();
             }
-        }
-
-        if (!m_nStartTime)
-        {
-            m_nStartTime = nTime;
-        }
-
-        double fps = 0.0;
-
-        LARGE_INTEGER qpcNow = {0};
-        if (m_fFreq)
-        {
-            if (QueryPerformanceCounter(&qpcNow))
-            {
-                if (m_nLastCounter)
-                {
-                    m_nFramesSinceUpdate++;
-                    fps = m_fFreq * m_nFramesSinceUpdate / double(qpcNow.QuadPart - m_nLastCounter);
-                }
-            }
-        }
-
-        WCHAR szStatusMessage[512];
-
-		// Imprimo aparte de los fps y el tiempo, el estado y posición de las manos
-        /*StringCchPrintf(szStatusMessage, _countof(szStatusMessage), L" FPS = %0.2f   Time = %I64d   -  \
-<Mano Izquierda>   Pos: %.2f, %.2f, %.2f  Cerrada: %d   -   <Mano Derecha>   Pos: %.2f, %.2f, %.2f  Cerrada: %d",
-			fps, (nTime - m_nStartTime), leftHandPos.X, leftHandPos.Y, leftHandPos.Z, leftHandClosed,
-			rightHandPos.X, rightHandPos.Y, rightHandPos.Z, rightHandClosed);*/
-
-		StringCchPrintf(szStatusMessage, _countof(szStatusMessage), L" FPS = %0.2f - \
-<Mano Izquierda>  Pos: %.2f, %.2f, %.2f  Cerrada: %d - <Mano Derecha>  Pos: %.2f, %.2f, %.2f  Cerrada: %d",
-fps, leftHandPos.X, leftHandPos.Y, leftHandPos.Z, leftHandClosed,
-rightHandPos.X, rightHandPos.Y, rightHandPos.Z, rightHandClosed);
-
-        if (SetStatusMessage(szStatusMessage, 250, false))
-        {
-            m_nLastCounter = qpcNow.QuadPart;
-            m_nFramesSinceUpdate = 0;
         }
     }
 }

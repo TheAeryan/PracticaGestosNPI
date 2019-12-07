@@ -1,25 +1,25 @@
 #pragma once
 
-#include "BodyBasics.h"
+#include "stdafx.h"
 
 /* MANO */
 
 /// <summary>
 /// Estado actual de la mano.
 /// </summary>
-enum EstadoMano{
-	NOT_TRACKED=0,
-	ABIERTA=1,
-	CERRADA=2
+enum class EstadoMano{
+	NOT_TRACKED,
+	ABIERTA,
+	CERRADA
 };
 
 /// <summary>
 /// Posición actual de la mano.
 /// </summary>
-enum PosicionMano{
-	ABAJO=0,
-	ENMEDIO=1,
-	ARRIBA=2
+enum class PosicionMano{
+	ABAJO,
+	ENMEDIO,
+	ARRIBA
 };
 
 /// <summary>
@@ -33,14 +33,14 @@ public:
 	/// <summary>
 	/// Constructor. El estado inicial de la mano es NOT_TRACKED y la posición, ABAJO.
 	/// </summary>
-	Mano() : estado(NOT_TRACKED), pos(ABAJO) {}
+	Mano() : estado(EstadoMano::NOT_TRACKED), pos(PosicionMano::ABAJO) {}
 	EstadoMano getEstado() { return estado; }
 	PosicionMano getPos() { return pos; }
 
 	/// <summary>
 	/// Establece el estado de la mano a partir del estado según la clase HandState.
 	/// </summary>
-	void setEstado(HandState handState);
+	void setEstado(HandState handState, TrackingState trackingState);
 
 	/// <summary>
 	/// Establece la posición de la mano según las posiciones (y) de la cintura,
@@ -57,12 +57,12 @@ public:
 /// <summary>
 /// Estado actual del diagrama de estados de los gestos. Según este estado, se llevará a cabo un gesto u otro, o ninguno.
 /// </summary>
-enum EstadoGestos{
-	ESTADO_INICIAL=0, // Estado donde no se realiza ningún gesto (estado de espera).
-	GESTO_DESPLAZAR=1,
-	GESTO_ROTAR=2,
-	GESTO_ZOOM=3,
-	GESTO_CAMBIAR_ANIO=4
+enum class EstadoGestos{
+	ESTADO_INICIAL, // Estado donde no se realiza ningún gesto (estado de espera).
+	GESTO_DESPLAZAR,
+	GESTO_ROTAR,
+	GESTO_ZOOM,
+	GESTO_CAMBIAR_ANIO
 };
 
 /// <summary>
@@ -75,7 +75,7 @@ public:
 	/// <summary>
 	/// Constructor. El estado inicial del sistema es ESTADO_INICIAL.
 	/// </summary>
-	AutomataEstados() : estado_actual(ESTADO_INICIAL) {}
+	AutomataEstados() : estado_actual(EstadoGestos::ESTADO_INICIAL) {}
 
 	/// <summary>
 	/// Devuelve el estado actual del sistema.

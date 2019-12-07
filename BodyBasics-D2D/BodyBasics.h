@@ -6,13 +6,14 @@
 
 #pragma once
 
+#include "stdafx.h"
 #include "resource.h"
+#include "ApiGestos.h"
 
 class CBodyBasics
 {
     static const int        cDepthWidth  = 512;
     static const int        cDepthHeight = 424;
-
 public:
     /// <summary>
     /// Constructor
@@ -52,12 +53,12 @@ public:
     int                     Run(HINSTANCE hInstance, int nCmdShow);
 
 private:
-	// Variables para ver la posición y estado de las manos
-
-	CameraSpacePoint leftHandPos, rightHandPos;
-	bool leftHandClosed, rightHandClosed;
-
-
+	// Atributos para almacenar el estado de las manos y el estado del sistema
+	// (qué gesto se está realizando)
+	
+	Mano mano_izd;
+	Mano mano_der;
+	AutomataEstados automata_estados;
 
     HWND                    m_hWnd;
     INT64                   m_nStartTime;
