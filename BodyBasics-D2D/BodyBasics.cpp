@@ -67,6 +67,8 @@ CBodyBasics::CBodyBasics() :
     {
         m_fFreq = double(qpf.QuadPart);
     }
+
+	gesto_actual = new AccionGesto();
 }
   
 
@@ -360,7 +362,6 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
 
 						// <Guardo la posición de las manos>
 
-
 						float pos_mano_izd = joints[JointType_HandLeft].Position.Y;
 						float pos_mano_der = joints[JointType_HandRight].Position.Y;
 						float pos_cintura = joints[JointType_SpineMid].Position.Y;
@@ -370,9 +371,48 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
 						mano_izd.setPos(pos_mano_izd, pos_cintura, pos_cabeza, alfa);
 						mano_der.setPos(pos_mano_der, pos_cintura, pos_cabeza, alfa);
 
+						// <Guardo la posición XYZ de las manos>
+
+						CameraSpacePoint xyz_mano_izd = joints[JointType_HandLeft].Position;
+						CameraSpacePoint xyz_mano_der = joints[JointType_HandRight].Position;
+
+						mano_izd.setXYZ(xyz_mano_izd);
+						mano_der.setXYZ(xyz_mano_der);
+
 						// <Ejecuto la transición de estado correspondiente>
 
-						automata_estados.transicionEstado(mano_izd, mano_der);
+						bool estado_ha_cambiado;
+						estado_ha_cambiado = automata_estados.transicionEstado(mano_izd, mano_der);
+
+						// <Ejecuto la acción del gesto correspondiente>
+
+						// Si el estado ha cambiado, inicializo el gesto correspondiente
+						if (estado_ha_cambiado) {
+
+							// Estado inicial -> le asigno una instancia de la clase AccionGesto,
+							// que no realiza ningún gesto
+							if (automata_estados.getEstado() == EstadoGestos::ESTADO_INICIAL) {
+								gesto_actual = new AccionGesto(mano_izd, mano_der, interfaz_grafica);
+							}
+							// Gesto desplazar
+							else if (automata_estados.getEstado() == EstadoGestos::GESTO_DESPLAZAR) {
+								//OutputDebugString(L"NUEVO GESTO - DESPLAZAR\n");
+								gesto_actual = new AccionGestoDesplazar(mano_izd, mano_der, interfaz_grafica);
+							}
+							// Gesto cambiar año
+							else if (automata_estados.getEstado() == EstadoGestos::GESTO_CAMBIAR_ANIO) {
+								gesto_actual = new AccionGestoCambiarAnio(mano_izd, mano_der, interfaz_grafica);
+							}
+
+						}
+						// Si el estado no ha cambiado, continúo el gesto previo
+						else {
+							//OutputDebugString(L"CONTINUAR GESTO\n");
+							// Llamo al método virtual de la superclase, lo que hará que se ejecute
+							// el método correspondiente al gesto actual (el método de una de sus
+							// subclases), aplicando polimorfismo dinámico
+							gesto_actual->continuarGesto(mano_izd, mano_der);
+						}
 
 						// <Muestro el texto abajo de la ventana con la información del estado>
 

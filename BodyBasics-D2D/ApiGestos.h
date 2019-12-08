@@ -108,8 +108,9 @@ public:
 
 	/// <summary>
 	/// Ejecuta la transición dada por el diagrama de estados, cambiando el estado del sistema si es necesario.
+	/// Devuelve true si el estado ha cambiado y false, si el estado es el mismo.
 	/// </summary>
-	void transicionEstado(Mano mano_izquierda, Mano mano_derecha);
+	bool transicionEstado(Mano mano_izquierda, Mano mano_derecha);
 };
 
 /* ACCIONES GESTOS */
@@ -125,6 +126,11 @@ protected:
 public:
 
 	/// <summary>
+	/// Constructor por defecto.
+	/// </summary>
+	AccionGesto() {}
+
+	/// <summary>
 	/// Constructor. Se llama cuando se inicial el gesto y guarda las posiciones iniciales de las manos,
 	/// así como una referencia a la interfaz gráfica.
 	/// </summary>
@@ -135,15 +141,19 @@ public:
 	/// Método llamado para ejecutar la acción del gesto, una vez que ya ha empezado.
 	/// Se compara la información nueva de las manos con la información previa, guardada en la clase.
 	/// </summary>
-	virtual void continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva);
+	virtual void continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva) {}
 };
 
 /// <summary>
 /// Clase que implementa la funcionalidad asociada al gesto GESTO_DESPLAZAR.
 /// </summary>
-class AccionGestoDesplazar :  AccionGesto {
+class AccionGestoDesplazar : public AccionGesto {
 private:
-	float umbral_desp = 0;
+	/// <summary>
+	/// Umbral de desplazamiento. Cuanto menor sea este umbral, mayor
+	/// será la sensibilidad del gesto al movimiento de las manos.
+	/// </summary>
+	float umbral_desp = 0.02; 
 public:
 	/// <summary>
 	/// Constructor. Se llama cuando se inicial el gesto y guarda las posiciones iniciales de las manos,
@@ -156,6 +166,39 @@ public:
 	/// Método llamado para ejecutar la acción del gesto, una vez que ya ha empezado.
 	/// Se compara la posición de la mano derecha actual y anterior y si el desplazamiento
 	/// en el plano XY no supera un umbral (umbral_desp), no se tiene en cuenta.
+	/// </summary>
+	void continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva);
+};
+
+/// <summary>
+/// Clase que implementa la funcionalidad asociada al gesto GESTO_CAMBIAR_ANIO
+/// </summary>
+class AccionGestoCambiarAnio : public AccionGesto {
+private:
+	/// <summary>
+	/// Umbral de desplazamiento. Cuanto menor sea este umbral, mayor
+	/// será la sensibilidad del gesto al movimiento de las manos.
+	/// </summary>
+	float umbral_desp = 0.01;
+
+	/// <summary>
+	/// Factor por el que se multiplica el desplazamiento en X de la mano derecha para cambiar
+	/// el año actual. Cuanto mayor sea este valor, mayor será el cambio en año para el mismo
+	/// movimiento con la mano.
+	/// </summary>
+	int factor_cambio_anio = 3000;
+public:
+	/// <summary>
+	/// Constructor. Se llama cuando se inicial el gesto y guarda las posiciones iniciales de las manos,
+	/// así como una referencia a la interfaz gráfica.
+	/// </summary>
+	AccionGestoCambiarAnio(Mano mano_izd_, Mano mano_der_, model3D& interfaz_grafica_) :
+		AccionGesto(mano_izd_, mano_der_, interfaz_grafica_) {}
+
+	/// <summary>
+	/// Método llamado para ejecutar la acción del gesto, una vez que ya ha empezado.
+	/// Se compara la posición de la mano derecha actual y anterior y si el desplazamiento
+	/// en el eje X no supera un umbral (umbral_desp), no se tiene en cuenta.
 	/// </summary>
 	void continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva);
 };

@@ -7,8 +7,13 @@
 class model3D {
 	private:
 		int actYear; // Año actual. En función de este año se mostrará el modelo de una forma u otra.
-
+		int minYear = 1000; // Año mínimo que puede valer actYear
+		int maxYear = 2019; // Año máximo que puede valer actYear
 	public:
+
+		// Constructor
+		model3D() : actYear(1500) {}
+
 		// Gesto de mover el modelo. Se puede mover en el eje x e y
 		void desplazar(float desp_x, float desp_y);
 		

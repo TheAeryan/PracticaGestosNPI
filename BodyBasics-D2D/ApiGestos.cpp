@@ -39,11 +39,14 @@ void Mano::setXYZ(CameraSpacePoint pos_camara) {
 
 /* DIAGRAMA ESTADOS */
 
-void AutomataEstados::transicionEstado(Mano mano_izquierda, Mano mano_derecha) {
+bool AutomataEstados::transicionEstado(Mano mano_izquierda, Mano mano_derecha) {
+	EstadoGestos estado_previo = this->estado_actual; // Guardo el estado antes de aplicar la transición
+
 	// Si el estado de alguna de las dos manos es NOT_TRACKED, estado_actual pasa a ser ESTADO_INICIAL
 	if (mano_izquierda.getEstado() == EstadoMano::NOT_TRACKED || mano_derecha.getEstado() == EstadoMano::NOT_TRACKED) {
 		estado_actual = EstadoGestos::ESTADO_INICIAL;
-		return;
+
+		return (estado_actual != estado_previo);
 	}
 
 	// Transiciones desde el estado inicial
@@ -112,11 +115,16 @@ void AutomataEstados::transicionEstado(Mano mano_izquierda, Mano mano_derecha) {
 			transicionEstado(mano_izquierda, mano_derecha);
 		}
 	}
+
+	EstadoGestos estado_nuevo = this->estado_actual; // Guardo el estado después de aplicar la transición
+
+	// Devuelvo si ha cambiado el estado o no
+	return (estado_nuevo != estado_previo);
 }
 
 /* ACCIONES GESTOS */
 
-void AccionGestoDesplazar::continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva) {
+void AccionGestoDesplazar::continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva) {	
 	// Calculo la distancia en el plano XY entre la posición nueva de la mano derecha y la antigua
 	float desp_x = mano_der_nueva.getX() - mano_der.getX();
 	float desp_y = mano_der_nueva.getY() - mano_der.getY();
@@ -130,5 +138,19 @@ void AccionGestoDesplazar::continuarGesto(Mano mano_izd_nueva, Mano mano_der_nue
 		mano_der = mano_der_nueva;
 
 		interfaz_grafica.desplazar(desp_x, desp_y);
+	}
+}
+
+void AccionGestoCambiarAnio::continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva) {
+	// Calculo la distancia en el eje X entre la posición nueva de la mano derecha y la antigua
+	float desp_x = mano_der_nueva.getX() - mano_der.getX();
+
+	// Si el desplazamiento (en valor absoluto) es mayor que el umbral, ejecuto la acción cambiarAnio de la interfaz
+	// y guardo las nuevas posiciones de las manos. Si no, no hago nada.
+	if (abs(desp_x) > umbral_desp) {
+		mano_izd = mano_izd_nueva;
+		mano_der = mano_der_nueva;
+
+		interfaz_grafica.cambiarAnio(int(desp_x * factor_cambio_anio));
 	}
 }

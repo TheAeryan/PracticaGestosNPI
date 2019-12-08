@@ -53,12 +53,18 @@ public:
     int                     Run(HINSTANCE hInstance, int nCmdShow);
 
 private:
-	// Atributos para almacenar el estado de las manos y el estado del sistema
-	// (qué gesto se está realizando)
-	
+	// Información actual de las manos
 	Mano mano_izd;
 	Mano mano_der;
+
+	// Estado actual del sistema
 	AutomataEstados automata_estados;
+
+	// Gesto actual que se está realizando
+	AccionGesto* gesto_actual;
+
+	// Interfaz gráfica
+	model3D interfaz_grafica;
 
     HWND                    m_hWnd;
     INT64                   m_nStartTime;
