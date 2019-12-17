@@ -2,6 +2,9 @@
 #include "ApiGestos.h"
 #include "model3D.h"
 #include <cmath>
+#include <iostream>
+
+#define PI 3.14159265
 
 
 /* MANO */
@@ -152,5 +155,92 @@ void AccionGestoCambiarAnio::continuarGesto(Mano mano_izd_nueva, Mano mano_der_n
 		mano_der = mano_der_nueva;
 
 		interfaz_grafica.cambiarAnio(int(desp_x * factor_cambio_anio));
+	}
+}
+
+float AccionGestoZoom::distancia(float p1, float p2) { return abs(p1 - p2); }
+
+AccionGestoZoom::AccionGestoZoom(Mano mano_izd_, Mano mano_der_, model3D& interfaz_grafica_) : AccionGesto(mano_izd_, mano_der_, interfaz_grafica_) {
+	// Obtenemos el centro inicial (punto medio de las manos)
+	centro.x = (mano_izd_.getX() + mano_der_.getX()) / 2;
+	centro.y = (mano_izd_.getY() + mano_der_.getY()) / 2;
+}
+
+void AccionGestoZoom::continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva) {
+	// Calculamos la separación de las manos respecto cada eje
+	float separacion_Z = distancia(mano_izd_nueva.getZ(), mano_der_nueva.getZ());
+	float separacion_Y = distancia(mano_izd_nueva.getY(), mano_der_nueva.getY());
+	float distancia_X_izq = distancia(mano_izd_nueva.getX(), centro.x);
+	float distancia_X_der = distancia(mano_der_nueva.getX(), centro.x);
+
+	// Las manos deben estar en la misma recta del eje X
+	if (separacion_Z <= umbral_separacion && separacion_Y <= umbral_separacion && distancia(distancia_X_izq, distancia_X_der) < umbral_distancia) {
+		float cambio_distancia = distancia(mano_izd_nueva.getX(), centro.x) - distancia(mano_izd.getX(), centro.x);
+		if (cambio_distancia > umbral_accion) {
+			mano_izd = mano_izd_nueva;
+			mano_der = mano_der_nueva;
+			interfaz_grafica.zoom(cambio_distancia);
+		}
+	}
+	else {
+		mano_izd = mano_izd_nueva;
+		mano_der = mano_der_nueva;
+	}
+
+}
+
+float AccionGestoRotar::distancia(float p1, float p2) { return abs(p1 - p2); }
+
+float AccionGestoRotar::distancia2D(float x1, float y1, float x2, float y2) {
+	float dx = x1 - x2;
+	float dy = y1 - y2;
+	return sqrt(dx * dx + dy * dy);
+}
+
+AccionGestoRotar::AccionGestoRotar(Mano mano_izd_, Mano mano_der_, model3D& interfaz_grafica_) :
+	AccionGesto(mano_izd_, mano_der_, interfaz_grafica_) {
+	centro.x = (mano_izd_.getX() + mano_der_.getX()) / 2;
+	centro.z = (mano_izd_.getZ() + mano_der_.getZ()) / 2;
+	radio = distancia2D(mano_izd_.getX(), mano_izd_.getZ(), centro.x, centro.z);
+}
+
+bool AccionGestoRotar::AccionGestoRotar::manoFuera(Mano mano) {
+	float radio_nuevo = distancia2D(mano.getX(), mano.getZ(), centro.x, centro.z);
+	return distancia(radio_nuevo, radio) > umbral_circunferencia;
+}
+
+float AccionGestoRotar::angulo(Mano mano1, Mano mano2) {
+	float distancia_cuadrado = distancia2D(mano1.getX(), mano1.getZ(), mano2.getX(), mano2.getZ()) * 
+		distancia2D(mano1.getX(), mano1.getZ(), mano2.getX(), mano2.getZ());
+	return acos(1 - (distancia_cuadrado / (2 * radio * radio)));
+}
+
+void AccionGestoRotar::continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva) {
+
+	float separacion_Y = distancia(mano_izd_nueva.getY(), mano_der.getY());
+
+	bool dentroY = separacion_Y <= umbral_separacion;
+	bool manosDentro = !manoFuera(mano_izd_nueva) && !manoFuera(mano_der_nueva);
+	bool mismosAngulos = distancia(angulo(mano_izd_nueva, mano_izd), angulo(mano_der_nueva, mano_der)) <= umbral_angulo;
+	bool direccionContraria = (mano_izd_nueva.getZ() - mano_izd.getZ()) * (mano_der_nueva.getZ() - mano_der.getZ()) <= 0;
+
+
+
+	if (dentroY && manosDentro && mismosAngulos && direccionContraria) {
+		int angulo_grad = angulo(mano_izd_nueva, mano_izd) * 180.0 / PI;
+		if (angulo_grad >= umbral_grados) {
+
+			if (mano_izd_nueva.getZ() - mano_izd.getZ() < 0) 
+				angulo_grad = -angulo_grad;
+
+			mano_izd = mano_izd_nueva;
+			mano_der = mano_der_nueva;
+			
+			interfaz_grafica.rotar(angulo_grad);
+		}
+	}
+	else {
+		mano_izd = mano_izd_nueva;
+		mano_der = mano_der_nueva;
 	}
 }

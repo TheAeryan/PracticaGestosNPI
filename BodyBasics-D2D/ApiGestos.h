@@ -202,3 +202,50 @@ public:
 	/// </summary>
 	void continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva);
 };
+
+class AccionGestoZoom : public AccionGesto {
+	private:
+		float umbral_separacion = 0.2 ;
+		float umbral_distancia = 0.2;
+		float umbral_accion = 0.01;
+
+		struct Punto {
+			float x, y;
+		};
+
+		Punto centro;
+
+
+		float distancia(float p1, float p2);
+
+	public:
+		AccionGestoZoom(Mano mano_izd_, Mano mano_der_, model3D& interfaz_grafica_);
+		void continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva);
+
+};
+
+class AccionGestoRotar : public AccionGesto {
+private:
+	float umbral_separacion = 0.2;
+	float umbral_angulo = 0.2;
+	float umbral_grados = 5;
+	float umbral_circunferencia = 0.2;
+
+	struct Punto {
+		float x, z;
+	};
+
+	Punto centro;
+	float radio;
+
+	float distancia(float p1, float p2);
+	float distancia2D(float x1, float y1, float x2, float y2);
+	bool manoFuera(Mano mano);
+	float angulo(Mano mano1, Mano mano2);
+
+public:
+	AccionGestoRotar(Mano mano_izd_, Mano mano_der_, model3D& interfaz_grafica_);
+	void continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva);
+	
+
+};

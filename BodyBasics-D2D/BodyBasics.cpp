@@ -12,6 +12,9 @@
 #include "model3D.h"
 
 
+
+
+
 static const float c_JointThickness = 3.0f;
 static const float c_TrackedBoneThickness = 6.0f;
 static const float c_InferredBoneThickness = 1.0f;
@@ -403,6 +406,13 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
 							else if (automata_estados.getEstado() == EstadoGestos::GESTO_CAMBIAR_ANIO) {
 								gesto_actual = new AccionGestoCambiarAnio(mano_izd, mano_der, interfaz_grafica);
 							}
+                            // Gesto zoom
+                            else if (automata_estados.getEstado() == EstadoGestos::GESTO_ZOOM) {
+                                gesto_actual = new AccionGestoZoom(mano_izd, mano_der, interfaz_grafica);
+                            }
+                            else if (automata_estados.getEstado() == EstadoGestos::GESTO_ROTAR) {
+                                gesto_actual = new AccionGestoRotar(mano_izd, mano_der, interfaz_grafica);
+                            }
 
 						}
 						// Si el estado no ha cambiado, continúo el gesto previo
