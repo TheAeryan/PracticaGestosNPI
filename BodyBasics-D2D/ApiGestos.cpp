@@ -140,7 +140,7 @@ void AccionGestoDesplazar::continuarGesto(Mano mano_izd_nueva, Mano mano_der_nue
 		mano_izd = mano_izd_nueva;
 		mano_der = mano_der_nueva;
 
-		interfaz_grafica.desplazar(desp_x, desp_y);
+		interfaz_grafica->desplazar(desp_x, desp_y);
 	}
 }
 
@@ -154,13 +154,13 @@ void AccionGestoCambiarAnio::continuarGesto(Mano mano_izd_nueva, Mano mano_der_n
 		mano_izd = mano_izd_nueva;
 		mano_der = mano_der_nueva;
 
-		interfaz_grafica.cambiarAnio(int(desp_x * factor_cambio_anio));
+		interfaz_grafica->cambiarAnio(int(desp_x * factor_cambio_anio));
 	}
 }
 
 float AccionGestoZoom::distancia(float p1, float p2) { return abs(p1 - p2); }
 
-AccionGestoZoom::AccionGestoZoom(Mano mano_izd_, Mano mano_der_, model3D& interfaz_grafica_) : AccionGesto(mano_izd_, mano_der_, interfaz_grafica_) {
+AccionGestoZoom::AccionGestoZoom(Mano mano_izd_, Mano mano_der_, model3D* interfaz_grafica_) : AccionGesto(mano_izd_, mano_der_, interfaz_grafica_) {
 	// Obtenemos el centro inicial (punto medio de las manos)
 	centro.x = (mano_izd_.getX() + mano_der_.getX()) / 2;
 	centro.y = (mano_izd_.getY() + mano_der_.getY()) / 2;
@@ -175,11 +175,19 @@ void AccionGestoZoom::continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva) {
 
 	// Las manos deben estar en la misma recta del eje X
 	if (separacion_Z <= umbral_separacion && separacion_Y <= umbral_separacion && distancia(distancia_X_izq, distancia_X_der) < umbral_distancia) {
-		float cambio_distancia = distancia(mano_izd_nueva.getX(), centro.x) - distancia(mano_izd.getX(), centro.x);
-		if (cambio_distancia > umbral_accion) {
+
+		float cambio_distancia;
+
+		if (abs(distancia(mano_izd_nueva.getX(), centro.x) - distancia(mano_izd.getX(), centro.x)) >
+			abs(distancia(mano_der_nueva.getX(), centro.x) - distancia(mano_der.getX(), centro.x)))
+			cambio_distancia = distancia(mano_der_nueva.getX(), centro.x) - distancia(mano_der.getX(), centro.x);
+		else
+			cambio_distancia = distancia(mano_izd_nueva.getX(), centro.x) - distancia(mano_izd.getX(), centro.x);
+										
+		if (abs(cambio_distancia) > umbral_accion) {
 			mano_izd = mano_izd_nueva;
 			mano_der = mano_der_nueva;
-			interfaz_grafica.zoom(cambio_distancia);
+			interfaz_grafica->zoom(cambio_distancia);
 		}
 	}
 	else {
@@ -197,7 +205,7 @@ float AccionGestoRotar::distancia2D(float x1, float y1, float x2, float y2) {
 	return sqrt(dx * dx + dy * dy);
 }
 
-AccionGestoRotar::AccionGestoRotar(Mano mano_izd_, Mano mano_der_, model3D& interfaz_grafica_) :
+AccionGestoRotar::AccionGestoRotar(Mano mano_izd_, Mano mano_der_, model3D* interfaz_grafica_) :
 	AccionGesto(mano_izd_, mano_der_, interfaz_grafica_) {
 	centro.x = (mano_izd_.getX() + mano_der_.getX()) / 2;
 	centro.z = (mano_izd_.getZ() + mano_der_.getZ()) / 2;
@@ -225,22 +233,22 @@ void AccionGestoRotar::continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva) 
 	bool direccionContraria = (mano_izd_nueva.getZ() - mano_izd.getZ()) * (mano_der_nueva.getZ() - mano_der.getZ()) <= 0;
 
 
-
 	if (dentroY && manosDentro && mismosAngulos && direccionContraria) {
-		int angulo_grad = angulo(mano_izd_nueva, mano_izd) * 180.0 / PI;
-		if (angulo_grad >= umbral_grados) {
-
-			if (mano_izd_nueva.getZ() - mano_izd.getZ() < 0) 
+		int angulo_grad = min(angulo(mano_der_nueva, mano_der) * 180.0 / PI, angulo(mano_izd_nueva, mano_izd) * 180.0 / PI);
+		
+		if (angulo_grad > umbral_grados) {
+			if (mano_der_nueva.getZ() - mano_der.getZ() > 0) 
 				angulo_grad = -angulo_grad;
 
 			mano_izd = mano_izd_nueva;
 			mano_der = mano_der_nueva;
 			
-			interfaz_grafica.rotar(angulo_grad);
+			interfaz_grafica->rotar(angulo_grad * 1.5);
 		}
 	}
 	else {
 		mano_izd = mano_izd_nueva;
 		mano_der = mano_der_nueva;
 	}
+
 }

@@ -30,6 +30,7 @@
     <ResourceCompile Include="BodyBasics.rc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\Downloads\vcpkg\installed\x86-windows\include\GL\wglew.h" />
     <ClInclude Include="ApiGestos.h" />
     <ClInclude Include="BodyBasics.h" />
     <ClInclude Include="model3D.h" />

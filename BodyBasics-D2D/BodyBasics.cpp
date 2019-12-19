@@ -4,6 +4,7 @@
 // </copyright>
 //------------------------------------------------------------------------------
 
+#include <Windows.h>
 #include "stdafx.h"
 #include <strsafe.h>
 #include "resource.h"
@@ -11,14 +12,56 @@
 #include "ApiGestos.h"
 #include "model3D.h"
 
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
 
 
+void controls(GLFWwindow* window, int key, int scancode, int action, int mods)
+{
+    if (action == GLFW_PRESS)
+        if (key == GLFW_KEY_ESCAPE)
+            glfwSetWindowShouldClose(window, GL_TRUE);
+}
+
+GLFWwindow* initWindow(const int resX, const int resY)
+{
+    if (!glfwInit())
+    {
+        fprintf(stderr, "Failed to initialize GLFW\n");
+        return NULL;
+    }
+    glfwWindowHint(GLFW_SAMPLES, 4); // 4x antialiasing
+
+    // Open a window and create its OpenGL context
+    GLFWwindow* window = glfwCreateWindow(resX, resY, "TEST", NULL, NULL);
+
+    if (window == NULL)
+    {
+        fprintf(stderr, "Failed to open GLFW window.\n");
+        glfwTerminate();
+        return NULL;
+    }
+
+    glfwMakeContextCurrent(window);
+    glfwSetKeyCallback(window, controls);
+
+    // Get info of GPU and supported OpenGL version
+    printf("Renderer: %s\n", glGetString(GL_RENDERER));
+    printf("OpenGL version supported %s\n", glGetString(GL_VERSION));
+
+    glEnable(GL_DEPTH_TEST); // Depth Testing
+    glDepthFunc(GL_LEQUAL);
+    glDisable(GL_CULL_FACE);
+    glCullFace(GL_BACK);
+    return window;
+}
 
 
 static const float c_JointThickness = 3.0f;
 static const float c_TrackedBoneThickness = 6.0f;
 static const float c_InferredBoneThickness = 1.0f;
 static const float c_HandSize = 30.0f;
+
 
 /// <summary>
 /// Entry point for the application
@@ -28,13 +71,13 @@ static const float c_HandSize = 30.0f;
 /// <param name="lpCmdLine">command line arguments</param>
 /// <param name="nCmdShow">whether to display minimized, maximized, or normally</param>
 /// <returns>status</returns>
-int APIENTRY wWinMain(    
-	_In_ HINSTANCE hInstance,
+int APIENTRY wWinMain(
+    _In_ HINSTANCE hInstance,
     _In_opt_ HINSTANCE hPrevInstance,
     _In_ LPWSTR lpCmdLine,
     _In_ int nShowCmd
-)
-{
+) {
+
     UNREFERENCED_PARAMETER(hPrevInstance);
     UNREFERENCED_PARAMETER(lpCmdLine);
 
@@ -135,9 +178,15 @@ int CBodyBasics::Run(HINSTANCE hInstance, int nCmdShow)
     // Show window
     ShowWindow(hWndApp, nCmdShow);
 
+
+    GLFWwindow* window = initWindow(1024, 620);
+    interfaz_grafica = new model3D();
+
     // Main message loop
-    while (WM_QUIT != msg.message)
+    while (!glfwWindowShouldClose(window))
     {
+
+        interfaz_grafica->display(window);
         Update();
 
         while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE))
@@ -152,6 +201,9 @@ int CBodyBasics::Run(HINSTANCE hInstance, int nCmdShow)
             DispatchMessageW(&msg);
         }
     }
+
+    glfwDestroyWindow(window);
+    glfwTerminate();
 
     return static_cast<int>(msg.wParam);
 }
@@ -407,10 +459,10 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
 								gesto_actual = new AccionGestoCambiarAnio(mano_izd, mano_der, interfaz_grafica);
 							}
                             // Gesto zoom
-                            else if (automata_estados.getEstado() == EstadoGestos::GESTO_ZOOM) {
+                            else if (automata_estados.getEstado() == EstadoGestos::GESTO_ROTAR) {
                                 gesto_actual = new AccionGestoZoom(mano_izd, mano_der, interfaz_grafica);
                             }
-                            else if (automata_estados.getEstado() == EstadoGestos::GESTO_ROTAR) {
+                            else if (automata_estados.getEstado() == EstadoGestos::GESTO_ZOOM) {
                                 gesto_actual = new AccionGestoRotar(mano_izd, mano_der, interfaz_grafica);
                             }
 

@@ -10,6 +10,10 @@
 #include "resource.h"
 #include "ApiGestos.h"
 
+
+#include <GL/glew.h>
+#include <GLFW/glfw3.h>
+
 class CBodyBasics
 {
     static const int        cDepthWidth  = 512;
@@ -52,6 +56,8 @@ public:
     /// <param name="nCmdShow"></param>
     int                     Run(HINSTANCE hInstance, int nCmdShow);
 
+    model3D* interfaz_grafica;
+
 private:
 	// Información actual de las manos
 	Mano mano_izd;
@@ -64,7 +70,7 @@ private:
 	AccionGesto* gesto_actual;
 
 	// Interfaz gráfica
-	model3D interfaz_grafica;
+	
 
     HWND                    m_hWnd;
     INT64                   m_nStartTime;
@@ -92,6 +98,8 @@ private:
     ID2D1SolidColorBrush*   m_pBrushHandClosed;
     ID2D1SolidColorBrush*   m_pBrushHandOpen;
     ID2D1SolidColorBrush*   m_pBrushHandLasso;
+
+
 
     /// <summary>
     /// Main processing function

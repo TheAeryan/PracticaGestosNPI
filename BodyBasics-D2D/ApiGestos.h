@@ -122,7 +122,7 @@ class AccionGesto{
 protected:
 	Mano mano_izd;
 	Mano mano_der;
-	model3D interfaz_grafica;
+	model3D* interfaz_grafica;
 public:
 
 	/// <summary>
@@ -134,7 +134,7 @@ public:
 	/// Constructor. Se llama cuando se inicial el gesto y guarda las posiciones iniciales de las manos,
 	/// así como una referencia a la interfaz gráfica.
 	/// </summary>
-	AccionGesto(Mano mano_izd_, Mano mano_der_, model3D& interfaz_grafica_) :
+	AccionGesto(Mano mano_izd_, Mano mano_der_, model3D* interfaz_grafica_) :
 		mano_izd(mano_izd_), mano_der(mano_der_), interfaz_grafica(interfaz_grafica_) {}
 
 	/// <summary>
@@ -159,7 +159,7 @@ public:
 	/// Constructor. Se llama cuando se inicial el gesto y guarda las posiciones iniciales de las manos,
 	/// así como una referencia a la interfaz gráfica.
 	/// </summary>
-	AccionGestoDesplazar(Mano mano_izd_, Mano mano_der_, model3D& interfaz_grafica_) :
+	AccionGestoDesplazar(Mano mano_izd_, Mano mano_der_, model3D* interfaz_grafica_) :
 		AccionGesto(mano_izd_, mano_der_, interfaz_grafica_) {}
 
 	/// <summary>
@@ -179,7 +179,7 @@ private:
 	/// Umbral de desplazamiento. Cuanto menor sea este umbral, mayor
 	/// será la sensibilidad del gesto al movimiento de las manos.
 	/// </summary>
-	float umbral_desp = 0.01;
+	float umbral_desp = 0.00;
 
 	/// <summary>
 	/// Factor por el que se multiplica el desplazamiento en X de la mano derecha para cambiar
@@ -192,7 +192,7 @@ public:
 	/// Constructor. Se llama cuando se inicial el gesto y guarda las posiciones iniciales de las manos,
 	/// así como una referencia a la interfaz gráfica.
 	/// </summary>
-	AccionGestoCambiarAnio(Mano mano_izd_, Mano mano_der_, model3D& interfaz_grafica_) :
+	AccionGestoCambiarAnio(Mano mano_izd_, Mano mano_der_, model3D* interfaz_grafica_) :
 		AccionGesto(mano_izd_, mano_der_, interfaz_grafica_) {}
 
 	/// <summary>
@@ -206,8 +206,8 @@ public:
 class AccionGestoZoom : public AccionGesto {
 	private:
 		float umbral_separacion = 0.2 ;
-		float umbral_distancia = 0.2;
-		float umbral_accion = 0.01;
+		float umbral_distancia = 0.3;
+		float umbral_accion = 0.001;
 
 		struct Punto {
 			float x, y;
@@ -219,7 +219,7 @@ class AccionGestoZoom : public AccionGesto {
 		float distancia(float p1, float p2);
 
 	public:
-		AccionGestoZoom(Mano mano_izd_, Mano mano_der_, model3D& interfaz_grafica_);
+		AccionGestoZoom(Mano mano_izd_, Mano mano_der_, model3D* interfaz_grafica_);
 		void continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva);
 
 };
@@ -227,8 +227,8 @@ class AccionGestoZoom : public AccionGesto {
 class AccionGestoRotar : public AccionGesto {
 private:
 	float umbral_separacion = 0.2;
-	float umbral_angulo = 0.2;
-	float umbral_grados = 5;
+	float umbral_angulo = 0.12;
+	float umbral_grados = 1.0;
 	float umbral_circunferencia = 0.2;
 
 	struct Punto {
@@ -244,7 +244,7 @@ private:
 	float angulo(Mano mano1, Mano mano2);
 
 public:
-	AccionGestoRotar(Mano mano_izd_, Mano mano_der_, model3D& interfaz_grafica_);
+	AccionGestoRotar(Mano mano_izd_, Mano mano_der_, model3D* interfaz_grafica_);
 	void continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva);
 	
 
