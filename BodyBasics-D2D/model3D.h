@@ -10,18 +10,24 @@
 class model3D {
 	private:
 		int actYear; // Año actual. En función de este año se mostrará el modelo de una forma u otra.
-		int minYear = 1000; // Año mínimo que puede valer actYear
-		int maxYear = 2019; // Año máximo que puede valer actYear
-		  // Cubo
-		float alpha = 0;
-		float scale = 1.0;
-		float barra_x = 0.0;
-
+		int minYear = 1000; // Año mínimo que puede valer actYear.
+		int maxYear = 2019; // Año máximo que puede valer actYear.
+		float ang_rotacion = 0; // Ángulo de rotación del modelo.
+		float escala = 1.0; // Factor de escala del modelo.
+		float desplazamiento_marca = 0.0; // Desplazamiento en el eje X de la marca de la línea temporal.
+		float desplazamiento_x = 0.0; // Desplazamiento en el eje X del modelo.
+		float desplazamiento_y = 0.0; // Desplazamiento en el eje Y del modelo.
+		float r = 1.0; // Valor R del color del modelo
+		float g = 1.0; // Valor G del color del modelo
+		float b = 1.0; // Valor B del color del modelo
 		
 	public:
 
 		// Constructor
 		model3D() : actYear(1510) { }
+
+		// Establece el color actual del modelo
+		void setColor(float r, float g, float b);
 
 		// Gesto de mover el modelo. Se puede mover en el eje x e y
 		void desplazar(float desp_x, float desp_y);
@@ -40,9 +46,18 @@ class model3D {
 		// Hace falta comprobar después, que actYear está dentro del rango [1000, 2019].
 		void cambiarAnio(int year_inc);
 
+		// Imprime en la ventana que se le pasa la escena de los objetos. Se colorea el fondo
+		// de verde, el objeto, la línea temporal y la marca temporal.
 		void display(GLFWwindow* window);
-		void drawCube();
+
+		// Dibuja el objeto en la escena, y le aplica las transformaciones correspondientes
+		// según los valores que tenga guardados actualmente.
+		void drawObject();
+
+		// Dibuja la línea temporal, un rectángulo por la parte de arriba de la ventana.
 		void drawLineaTemporal();
+
+		// Dibuja la marca temporal, que empieza en el centro de la línea temporal.
 		void drawMarcaTemporal();
 };
 

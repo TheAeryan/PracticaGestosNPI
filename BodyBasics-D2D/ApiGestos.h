@@ -3,6 +3,10 @@
 #include "stdafx.h"
 #include "model3D.h"
 
+#include <chrono>
+using namespace std::chrono;
+
+
 /* MANO */
 
 /// <summary>
@@ -95,11 +99,12 @@ enum class EstadoGestos{
 class AutomataEstados {
 private:
 	EstadoGestos estado_actual;
+	time_point<high_resolution_clock> ultimo_tiempo;
 public:
 	/// <summary>
 	/// Constructor. El estado inicial del sistema es ESTADO_INICIAL.
 	/// </summary>
-	AutomataEstados() : estado_actual(EstadoGestos::ESTADO_INICIAL) {}
+	AutomataEstados() : estado_actual(EstadoGestos::ESTADO_INICIAL) { ultimo_tiempo = high_resolution_clock::now(); }
 
 	/// <summary>
 	/// Devuelve el estado actual del sistema.
@@ -132,7 +137,7 @@ public:
 
 	/// <summary>
 	/// Constructor. Se llama cuando se inicial el gesto y guarda las posiciones iniciales de las manos,
-	/// así como una referencia a la interfaz gráfica.
+	/// así como una puntero a la interfaz gráfica.
 	/// </summary>
 	AccionGesto(Mano mano_izd_, Mano mano_der_, model3D* interfaz_grafica_) :
 		mano_izd(mano_izd_), mano_der(mano_der_), interfaz_grafica(interfaz_grafica_) {}
@@ -153,11 +158,11 @@ private:
 	/// Umbral de desplazamiento. Cuanto menor sea este umbral, mayor
 	/// será la sensibilidad del gesto al movimiento de las manos.
 	/// </summary>
-	float umbral_desp = 0.02; 
+	float umbral_desp = 0.005; 
 public:
 	/// <summary>
 	/// Constructor. Se llama cuando se inicial el gesto y guarda las posiciones iniciales de las manos,
-	/// así como una referencia a la interfaz gráfica.
+	/// así como una puntero a la interfaz gráfica.
 	/// </summary>
 	AccionGestoDesplazar(Mano mano_izd_, Mano mano_der_, model3D* interfaz_grafica_) :
 		AccionGesto(mano_izd_, mano_der_, interfaz_grafica_) {}
@@ -190,7 +195,7 @@ private:
 public:
 	/// <summary>
 	/// Constructor. Se llama cuando se inicial el gesto y guarda las posiciones iniciales de las manos,
-	/// así como una referencia a la interfaz gráfica.
+	/// así como una puntero a la interfaz gráfica.
 	/// </summary>
 	AccionGestoCambiarAnio(Mano mano_izd_, Mano mano_der_, model3D* interfaz_grafica_) :
 		AccionGesto(mano_izd_, mano_der_, interfaz_grafica_) {}
@@ -203,49 +208,136 @@ public:
 	void continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva);
 };
 
+/// <summary>
+/// Clase que implementa la funcionalidad asociada al gesto GESTO_ZOOM
+/// </summary>
 class AccionGestoZoom : public AccionGesto {
 	private:
-		float umbral_separacion = 0.2 ;
+		/// <summary>
+		/// Umbral de separación, ajusta como de lejos se pueden alejar las manos
+		/// del plano XY
+		/// </summary>
+		float umbral_separacion = 0.2;
+
+		/// <summary>
+		/// Umbral de distancia. Cuanto más valga, menos tienen que ir a la par
+		/// moviendose las manos.
+		/// </summary>
 		float umbral_distancia = 0.3;
-		float umbral_accion = 0.001;
 
-		struct Punto {
-			float x, y;
-		};
+		/// <summary>
+		/// Umbral de acción. Cuanto más valga, más tiene que cambiar la distancia
+		/// para que se realize el gesto.
+		/// </summary>
+		float umbral_accion = 0.00;
 
-		Punto centro;
+		/// <summary>
+		/// El centro, punto medio de la posición inicial de las manos (eje X)
+		/// </summary>
+		float centro_x;
 
-
+		/// <summary>
+		/// Calcula la distancia 1 (valor absoluto de la diferencia)
+		/// </summary>
 		float distancia(float p1, float p2);
 
 	public:
+		/// <summary>
+		/// Constructor. Se llama cuando se inicial el gesto y guarda las posiciones iniciales de las manos,
+		/// así como una puntero a la interfaz gráfica. Toma el punto medio en el eje X de las manos.
+		/// </summary>
 		AccionGestoZoom(Mano mano_izd_, Mano mano_der_, model3D* interfaz_grafica_);
+
+		/// <summary>
+		/// Método para continuar el gesto. Comprueba que las manos no se separen mucho en el plano YZ y
+		/// que la distancia que separan las manos del centro se separan lo mismo. Actualiza el valor
+		/// de escala del modelo.
+		/// </summary>
 		void continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva);
 
 };
 
+/// <summary>
+/// Clase que implementa la funcionalidad asociada al gesto GESTO_ZOOM
+/// </summary>
 class AccionGestoRotar : public AccionGesto {
 private:
+	/// <summary>
+	/// Umbral de separación, ajusta como de lejos se pueden alejar las manos
+	/// del eje Y
+	/// </summary>
 	float umbral_separacion = 0.2;
-	float umbral_angulo = 0.12;
-	float umbral_grados = 1.0;
-	float umbral_circunferencia = 0.2;
 
+	/// <summary>
+	// Umbral del ángulo que forman las manos en la circunferencia. Cuanto más
+	/// vale, más pueden ser diferentes los ángulos que se forman.
+	/// </summary>
+	float umbral_angulo = 0.12;
+
+	/// <summary>
+	/// Umbral de grados mínimos para aplicar la rotación, la sensibilidad,
+	/// cuanto más alto más ángulo debe formarse para aplicar la acción del gesto.
+	/// </summary>
+	float umbral_grados = 1.0;
+
+	/// <summary>
+	/// Umbral de la circunferencia, cuanto más alto más se pueden alejar las manos
+	/// de la circunferencia que se considera.
+	/// </summary>
+	float umbral_circunferencia = 0.2;
+	
+	/// <summary>
+	/// Representa un punto en el plano XZ
+	/// </summary>
 	struct Punto {
 		float x, z;
 	};
 
+	/// <summary>
+	/// El centro de la circunferencia, punto medio en el plano XZ.
+	/// </summary>
 	Punto centro;
+
+	/// <summary>
+	/// Radio de la circunferencia.
+	/// </summary>
 	float radio;
 
+	/// <summary>
+	/// Calcula la distancia 1 (valor absoluto de la diferencia)
+	/// </summary>
 	float distancia(float p1, float p2);
+
+	/// <summary>
+	/// Calcula la distancia 2 (valor euclideo)
+	/// </summary>
 	float distancia2D(float x1, float y1, float x2, float y2);
+
+	/// <summary>
+	/// Devuelve si la mano que se le pasa está fuera de la circunferencia
+	/// con un cierto umbral.
+	/// </summary>
 	bool manoFuera(Mano mano);
+
+	/// <summary>
+	/// Devuewlve el ángulo que forman dos manos, se usa con la posición
+	/// de la mano anterior y la nueva para calcular el ángulo que
+	/// ha formado una mano.
+	/// </summary>
 	float angulo(Mano mano1, Mano mano2);
 
 public:
+	/// <summary>
+	/// Constructor. Inicializamos las manos iniciales, la interfaz gráfica, y se
+	/// establece el centro XZ con el punto medio en el plano XZ (centro de circunferencia)
+	/// y el radio.
+	/// </summary>
 	AccionGestoRotar(Mano mano_izd_, Mano mano_der_, model3D* interfaz_grafica_);
-	void continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva);
-	
 
+	/// <summary>
+	/// Método para continuar el gesto. Se comprueba que las manos no se salgan del eje Y,
+	/// estén en la circunferencia, formen el mismo ángulo y en sentido opuesto entre ellos.
+	/// Si se cumple todo se rota el objeto, conforme el ángulo rotado.
+	/// </summary>
+	void continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva);
 };

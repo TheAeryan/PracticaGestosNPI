@@ -56,6 +56,9 @@ public:
     /// <param name="nCmdShow"></param>
     int                     Run(HINSTANCE hInstance, int nCmdShow);
 
+    /// <summary>
+    /// Puntero a la interfaz gráfica
+    /// </summary>
     model3D* interfaz_grafica;
 
 private:

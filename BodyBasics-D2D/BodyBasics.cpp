@@ -15,7 +15,9 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 
-
+/// <summary>
+/// Si se pulsa ESC se cierra la ventana.
+/// </summary>
 void controls(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
     if (action == GLFW_PRESS)
@@ -23,6 +25,9 @@ void controls(GLFWwindow* window, int key, int scancode, int action, int mods)
             glfwSetWindowShouldClose(window, GL_TRUE);
 }
 
+/// <summary>
+/// Inicializar una ventana pasandole los tamaños.
+/// </summary>
 GLFWwindow* initWindow(const int resX, const int resY)
 {
     if (!glfwInit())
@@ -178,15 +183,17 @@ int CBodyBasics::Run(HINSTANCE hInstance, int nCmdShow)
     // Show window
     ShowWindow(hWndApp, nCmdShow);
 
-
+    // Inicializamos la ventana
     GLFWwindow* window = initWindow(1024, 620);
+    // Creamos la interfaz gráfica
     interfaz_grafica = new model3D();
 
-    // Main message loop
+    // Mientras no se cierre la ventana
     while (!glfwWindowShouldClose(window))
     {
-
+        // Mostramos la interfaz
         interfaz_grafica->display(window);
+        // Actualizamos con los gestos
         Update();
 
         while (PeekMessageW(&msg, NULL, 0, 0, PM_REMOVE))
@@ -447,22 +454,27 @@ void CBodyBasics::ProcessBody(INT64 nTime, int nBodyCount, IBody** ppBodies)
 							// Estado inicial -> le asigno una instancia de la clase AccionGesto,
 							// que no realiza ningún gesto
 							if (automata_estados.getEstado() == EstadoGestos::ESTADO_INICIAL) {
+                                interfaz_grafica->setColor(1.0, 1.0, 1.0);
 								gesto_actual = new AccionGesto(mano_izd, mano_der, interfaz_grafica);
+                                
 							}
 							// Gesto desplazar
 							else if (automata_estados.getEstado() == EstadoGestos::GESTO_DESPLAZAR) {
-								//OutputDebugString(L"NUEVO GESTO - DESPLAZAR\n");
+                                interfaz_grafica->setColor(1.0, 0.0, 0.0);
 								gesto_actual = new AccionGestoDesplazar(mano_izd, mano_der, interfaz_grafica);
 							}
 							// Gesto cambiar año
 							else if (automata_estados.getEstado() == EstadoGestos::GESTO_CAMBIAR_ANIO) {
+                                interfaz_grafica->setColor(0.0, 0.0, 0.0);
 								gesto_actual = new AccionGestoCambiarAnio(mano_izd, mano_der, interfaz_grafica);
 							}
                             // Gesto zoom
                             else if (automata_estados.getEstado() == EstadoGestos::GESTO_ROTAR) {
+                                interfaz_grafica->setColor(0.0, 0.0, 1.0);
                                 gesto_actual = new AccionGestoZoom(mano_izd, mano_der, interfaz_grafica);
                             }
                             else if (automata_estados.getEstado() == EstadoGestos::GESTO_ZOOM) {
+                                interfaz_grafica->setColor(1.0, 1.0, 0.0);
                                 gesto_actual = new AccionGestoRotar(mano_izd, mano_der, interfaz_grafica);
                             }
 
