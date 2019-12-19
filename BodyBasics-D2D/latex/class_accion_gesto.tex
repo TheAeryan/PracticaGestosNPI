@@ -1,0 +1,138 @@
+\hypertarget{class_accion_gesto}{}\doxysection{Accion\+Gesto Class Reference}
+\label{class_accion_gesto}\index{AccionGesto@{AccionGesto}}
+
+
+Clase abstracta de la que heredan las clases que implementan los gestos y que define su funcionalidad común.  
+
+
+
+
+{\ttfamily \#include $<$Api\+Gestos.\+h$>$}
+
+Inheritance diagram for Accion\+Gesto\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.696970cm]{class_accion_gesto}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_accion_gesto_adf19ff93c73ebfc11ed5d8f21293bda8}{Accion\+Gesto}} ()
+\begin{DoxyCompactList}\small\item\em Constructor por defecto. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_accion_gesto_a0129d5325379db2eb072b69f6bbcda8c}{Accion\+Gesto}} (\mbox{\hyperlink{class_mano}{Mano}} mano\+\_\+izd\+\_\+, \mbox{\hyperlink{class_mano}{Mano}} mano\+\_\+der\+\_\+, \mbox{\hyperlink{classmodel3_d}{model3D}} $\ast$interfaz\+\_\+grafica\+\_\+)
+\begin{DoxyCompactList}\small\item\em Constructor. Se llama cuando se inicial el gesto y guarda las posiciones iniciales de las manos, así como una puntero a la interfaz gráfica. \end{DoxyCompactList}\item 
+virtual void \mbox{\hyperlink{class_accion_gesto_a8036c095d46ed654f1b5fea69a1a7f93}{continuar\+Gesto}} (\mbox{\hyperlink{class_mano}{Mano}} mano\+\_\+izd\+\_\+nueva, \mbox{\hyperlink{class_mano}{Mano}} mano\+\_\+der\+\_\+nueva)
+\begin{DoxyCompactList}\small\item\em Método llamado para ejecutar la acción del gesto, una vez que ya ha empezado. Se compara la información nueva de las manos con la información previa, guardada en la clase. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_mano}{Mano}} \mbox{\hyperlink{class_accion_gesto_ab909b1a24ac564d84eec7d8431b2f5cc}{mano\+\_\+izd}}
+\begin{DoxyCompactList}\small\item\em La mano izquierda. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_mano}{Mano}} \mbox{\hyperlink{class_accion_gesto_af0ac418aa4067d411b42bd3cc1381581}{mano\+\_\+der}}
+\begin{DoxyCompactList}\small\item\em La mano derecha. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classmodel3_d}{model3D}} $\ast$ \mbox{\hyperlink{class_accion_gesto_af05ac5528063cd7ee8c03f6244eac0c9}{interfaz\+\_\+grafica}}
+\begin{DoxyCompactList}\small\item\em La interfaz grafica. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Clase abstracta de la que heredan las clases que implementan los gestos y que define su funcionalidad común. 
+
+Mike, 19/12/2019. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_accion_gesto_adf19ff93c73ebfc11ed5d8f21293bda8}\label{class_accion_gesto_adf19ff93c73ebfc11ed5d8f21293bda8}} 
+\index{AccionGesto@{AccionGesto}!AccionGesto@{AccionGesto}}
+\index{AccionGesto@{AccionGesto}!AccionGesto@{AccionGesto}}
+\doxysubsubsection{\texorpdfstring{AccionGesto()}{AccionGesto()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily Accion\+Gesto\+::\+Accion\+Gesto (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor por defecto. 
+
+Mike, 19/12/2019. \mbox{\Hypertarget{class_accion_gesto_a0129d5325379db2eb072b69f6bbcda8c}\label{class_accion_gesto_a0129d5325379db2eb072b69f6bbcda8c}} 
+\index{AccionGesto@{AccionGesto}!AccionGesto@{AccionGesto}}
+\index{AccionGesto@{AccionGesto}!AccionGesto@{AccionGesto}}
+\doxysubsubsection{\texorpdfstring{AccionGesto()}{AccionGesto()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily Accion\+Gesto\+::\+Accion\+Gesto (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mano}{Mano}}}]{mano\+\_\+izd\+\_\+,  }\item[{\mbox{\hyperlink{class_mano}{Mano}}}]{mano\+\_\+der\+\_\+,  }\item[{\mbox{\hyperlink{classmodel3_d}{model3D}} $\ast$}]{interfaz\+\_\+grafica\+\_\+ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor. Se llama cuando se inicial el gesto y guarda las posiciones iniciales de las manos, así como una puntero a la interfaz gráfica. 
+
+Mike, 19/12/2019. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mano\+\_\+izd\+\_\+} & The mano izd. \\
+\hline
+{\em mano\+\_\+der\+\_\+} & The mano der. \\
+\hline
+{\em interfaz\+\_\+grafica\+\_\+} & \mbox{[}in,out\mbox{]} If non-\/null, the interfaz grafica. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_accion_gesto_a8036c095d46ed654f1b5fea69a1a7f93}\label{class_accion_gesto_a8036c095d46ed654f1b5fea69a1a7f93}} 
+\index{AccionGesto@{AccionGesto}!continuarGesto@{continuarGesto}}
+\index{continuarGesto@{continuarGesto}!AccionGesto@{AccionGesto}}
+\doxysubsubsection{\texorpdfstring{continuarGesto()}{continuarGesto()}}
+{\footnotesize\ttfamily virtual void Accion\+Gesto\+::continuar\+Gesto (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mano}{Mano}}}]{mano\+\_\+izd\+\_\+nueva,  }\item[{\mbox{\hyperlink{class_mano}{Mano}}}]{mano\+\_\+der\+\_\+nueva }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}, {\ttfamily [virtual]}}
+
+
+
+Método llamado para ejecutar la acción del gesto, una vez que ya ha empezado. Se compara la información nueva de las manos con la información previa, guardada en la clase. 
+
+Mike, 19/12/2019. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mano\+\_\+izd\+\_\+nueva} & The mano izd nueva. \\
+\hline
+{\em mano\+\_\+der\+\_\+nueva} & The mano der nueva. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \mbox{\hyperlink{class_accion_gesto_rotar_a48dada492c02f94b9f943f29d6d26cf9}{Accion\+Gesto\+Rotar}}, \mbox{\hyperlink{class_accion_gesto_zoom_a10dad9083cbb468f5cb2b15f8d637290}{Accion\+Gesto\+Zoom}}, \mbox{\hyperlink{class_accion_gesto_cambiar_anio_a6933acc946815600a7864a9eb152e81d}{Accion\+Gesto\+Cambiar\+Anio}}, and \mbox{\hyperlink{class_accion_gesto_desplazar_aac5ef84d8e2778401fb49e6dd158d179}{Accion\+Gesto\+Desplazar}}.
+
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{class_accion_gesto_af05ac5528063cd7ee8c03f6244eac0c9}\label{class_accion_gesto_af05ac5528063cd7ee8c03f6244eac0c9}} 
+\index{AccionGesto@{AccionGesto}!interfaz\_grafica@{interfaz\_grafica}}
+\index{interfaz\_grafica@{interfaz\_grafica}!AccionGesto@{AccionGesto}}
+\doxysubsubsection{\texorpdfstring{interfaz\_grafica}{interfaz\_grafica}}
+{\footnotesize\ttfamily \mbox{\hyperlink{classmodel3_d}{model3D}}$\ast$ Accion\+Gesto\+::interfaz\+\_\+grafica\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+La interfaz grafica. 
+
+\mbox{\Hypertarget{class_accion_gesto_af0ac418aa4067d411b42bd3cc1381581}\label{class_accion_gesto_af0ac418aa4067d411b42bd3cc1381581}} 
+\index{AccionGesto@{AccionGesto}!mano\_der@{mano\_der}}
+\index{mano\_der@{mano\_der}!AccionGesto@{AccionGesto}}
+\doxysubsubsection{\texorpdfstring{mano\_der}{mano\_der}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mano}{Mano}} Accion\+Gesto\+::mano\+\_\+der\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+La mano derecha. 
+
+\mbox{\Hypertarget{class_accion_gesto_ab909b1a24ac564d84eec7d8431b2f5cc}\label{class_accion_gesto_ab909b1a24ac564d84eec7d8431b2f5cc}} 
+\index{AccionGesto@{AccionGesto}!mano\_izd@{mano\_izd}}
+\index{mano\_izd@{mano\_izd}!AccionGesto@{AccionGesto}}
+\doxysubsubsection{\texorpdfstring{mano\_izd}{mano\_izd}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_mano}{Mano}} Accion\+Gesto\+::mano\+\_\+izd\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+La mano izquierda. 
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Api\+Gestos.\+h\end{DoxyCompactItemize}

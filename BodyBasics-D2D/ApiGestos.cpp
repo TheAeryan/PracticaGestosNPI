@@ -13,7 +13,7 @@ using namespace std::chrono;
 
 void Mano::setEstado(HandState handState, TrackingState trackingState) {
 
-	// Si la articulación está trackeada, la mano estará abierta o cerrada
+	// Si la articulaciï¿½n estï¿½ trackeada, la mano estarï¿½ abierta o cerrada
 	if (trackingState == TrackingState_Tracked) {
 		if (handState == HandState_Closed) {
 			estado = EstadoMano::CERRADA;
@@ -53,7 +53,7 @@ bool AutomataEstados::transicionEstado(Mano mano_izquierda, Mano mano_derecha) {
 		ultimo_tiempo = tiempo_actual;
 	}
 
-	EstadoGestos estado_previo = this->estado_actual; // Guardo el estado antes de aplicar la transición
+	EstadoGestos estado_previo = this->estado_actual; // Guardo el estado antes de aplicar la transiciï¿½n
 
 	// Si el estado de alguna de las dos manos es NOT_TRACKED, estado_actual pasa a ser ESTADO_INICIAL
 	if (mano_izquierda.getEstado() == EstadoMano::NOT_TRACKED || mano_derecha.getEstado() == EstadoMano::NOT_TRACKED) {
@@ -79,7 +79,7 @@ bool AutomataEstados::transicionEstado(Mano mano_izquierda, Mano mano_derecha) {
 			mano_derecha.getEstado() == EstadoMano::ABIERTA && mano_derecha.getPos() == PosicionMano::ENMEDIO)
 			estado_actual = EstadoGestos::GESTO_ZOOM;
 
-		// Gesto cambiar año
+		// Gesto cambiar aï¿½o
 		else if (mano_izquierda.getEstado() == EstadoMano::ABIERTA && mano_derecha.getEstado() == EstadoMano::CERRADA &&
 			mano_derecha.getPos() == PosicionMano::ARRIBA)
 			estado_actual = EstadoGestos::GESTO_CAMBIAR_ANIO;
@@ -87,49 +87,49 @@ bool AutomataEstados::transicionEstado(Mano mano_izquierda, Mano mano_derecha) {
 
 	// Transiciones desde el estado Desplazar
 	else if (estado_actual == EstadoGestos::GESTO_DESPLAZAR) {
-		// Veo si una de las dos manos ha cambiado de estado (la posición me da igual). En ese caso, paso al estado inicial.
+		// Veo si una de las dos manos ha cambiado de estado (la posiciï¿½n me da igual). En ese caso, paso al estado inicial.
 		if (!(mano_izquierda.getEstado() == EstadoMano::ABIERTA && mano_derecha.getEstado() == EstadoMano::CERRADA)) {
 			estado_actual = EstadoGestos::ESTADO_INICIAL;
 
-			// Vuelvo a aplicar una transición en caso de ser necesario
+			// Vuelvo a aplicar una transiciï¿½n en caso de ser necesario
 			transicionEstado(mano_izquierda, mano_derecha);
 		}
 	}
 
 	// Transiciones desde el estado Rotar
 	else if (estado_actual == EstadoGestos::GESTO_ROTAR) {
-		// Veo si una de las dos manos ha cambiado de estado (la posición me da igual). En ese caso, paso al estado inicial.
+		// Veo si una de las dos manos ha cambiado de estado (la posiciï¿½n me da igual). En ese caso, paso al estado inicial.
 		if (!(mano_izquierda.getEstado() == EstadoMano::CERRADA && mano_derecha.getEstado() == EstadoMano::CERRADA)) {
 			estado_actual = EstadoGestos::ESTADO_INICIAL;
 
-			// Vuelvo a aplicar una transición en caso de ser necesario
+			// Vuelvo a aplicar una transiciï¿½n en caso de ser necesario
 			transicionEstado(mano_izquierda, mano_derecha);
 		}
 	}
 
 	// Transiciones desde el estado Zoom
 	else if (estado_actual == EstadoGestos::GESTO_ZOOM) {
-		// Veo si una de las dos manos ha cambiado de estado (la posición me da igual). En ese caso, paso al estado inicial.
+		// Veo si una de las dos manos ha cambiado de estado (la posiciï¿½n me da igual). En ese caso, paso al estado inicial.
 		if (!(mano_izquierda.getEstado() == EstadoMano::ABIERTA && mano_derecha.getEstado() == EstadoMano::ABIERTA)) {
 			estado_actual = EstadoGestos::ESTADO_INICIAL;
 
-			// Vuelvo a aplicar una transición en caso de ser necesario
+			// Vuelvo a aplicar una transiciï¿½n en caso de ser necesario
 			transicionEstado(mano_izquierda, mano_derecha);
 		}
 	}
 
-	// Transiciones desde el estado Cambiar año
+	// Transiciones desde el estado Cambiar aï¿½o
 	else if (estado_actual == EstadoGestos::GESTO_CAMBIAR_ANIO) {
-		// Veo si una de las dos manos ha cambiado de estado (la posición me da igual). En ese caso, paso al estado inicial.
+		// Veo si una de las dos manos ha cambiado de estado (la posiciï¿½n me da igual). En ese caso, paso al estado inicial.
 		if (!(mano_izquierda.getEstado() == EstadoMano::ABIERTA && mano_derecha.getEstado() == EstadoMano::CERRADA)) {
 			estado_actual = EstadoGestos::ESTADO_INICIAL;
 
-			// Vuelvo a aplicar una transición en caso de ser necesario
+			// Vuelvo a aplicar una transiciï¿½n en caso de ser necesario
 			transicionEstado(mano_izquierda, mano_derecha);
 		}
 	}
 
-	EstadoGestos estado_nuevo = this->estado_actual; // Guardo el estado después de aplicar la transición
+	EstadoGestos estado_nuevo = this->estado_actual; // Guardo el estado despuï¿½s de aplicar la transiciï¿½n
 
 	// Devuelvo si ha cambiado el estado o no
 	return (estado_nuevo != estado_previo);
@@ -137,14 +137,14 @@ bool AutomataEstados::transicionEstado(Mano mano_izquierda, Mano mano_derecha) {
 
 /* ACCIONES GESTOS */
 
-void AccionGestoDesplazar::continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva) {	
-	// Calculo la distancia en el plano XY entre la posición nueva de la mano derecha y la antigua
+void AccionGestoDesplazar::continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva) {
+	// Calculo la distancia en el plano XY entre la posiciï¿½n nueva de la mano derecha y la antigua
 	float desp_x = mano_der_nueva.getX() - mano_der.getX();
 	float desp_y = mano_der_nueva.getY() - mano_der.getY();
 
 	float desp_xy = sqrt(desp_x * desp_x + desp_y * desp_y);
 
-	// Si el desplazamiento es mayor que el umbral, ejecuto la acción Desplazar de la interfaz
+	// Si el desplazamiento es mayor que el umbral, ejecuto la acciï¿½n Desplazar de la interfaz
 	// y guardo las nuevas posiciones de las manos. Si no, no hago nada.
 	if (desp_xy > umbral_desp) {
 		mano_izd = mano_izd_nueva;
@@ -155,10 +155,10 @@ void AccionGestoDesplazar::continuarGesto(Mano mano_izd_nueva, Mano mano_der_nue
 }
 
 void AccionGestoCambiarAnio::continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva) {
-	// Calculo la distancia en el eje X entre la posición nueva de la mano derecha y la antigua
+	// Calculo la distancia en el eje X entre la posiciï¿½n nueva de la mano derecha y la antigua
 	float desp_x = mano_der_nueva.getX() - mano_der.getX();
 
-	// Si el desplazamiento (en valor absoluto) es mayor que el umbral, ejecuto la acción cambiarAnio de la interfaz
+	// Si el desplazamiento (en valor absoluto) es mayor que el umbral, ejecuto la acciï¿½n cambiarAnio de la interfaz
 	// y guardo las nuevas posiciones de las manos. Si no, no hago nada.
 	if (abs(desp_x) > umbral_desp) {
 		mano_izd = mano_izd_nueva;
@@ -176,7 +176,7 @@ AccionGestoZoom::AccionGestoZoom(Mano mano_izd_, Mano mano_der_, model3D* interf
 }
 
 void AccionGestoZoom::continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva) {
-	// Calculamos la separación de las manos respecto cada eje
+	// Calculamos la separaciï¿½n de las manos respecto cada eje
 	float separacion_Z = distancia(mano_izd_nueva.getZ(), mano_der_nueva.getZ());
 	float separacion_Y = distancia(mano_izd_nueva.getY(), mano_der_nueva.getY());
 	// Obtenemos la distancia de las manos actual respecto el centro
@@ -193,7 +193,7 @@ void AccionGestoZoom::continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva) {
 			cambio_distancia = distancia(mano_der_nueva.getX(), centro_x) - distancia(mano_der.getX(), centro_x);
 		else
 			cambio_distancia = distancia(mano_izd_nueva.getX(), centro_x) - distancia(mano_izd.getX(), centro_x);
-									
+
 		// Se aplica el valor del gesto
 		if (abs(cambio_distancia) > umbral_accion) {
 			mano_izd = mano_izd_nueva;
@@ -225,7 +225,7 @@ AccionGestoRotar::AccionGestoRotar(Mano mano_izd_, Mano mano_der_, model3D* inte
 	radio = distancia2D(mano_izd_.getX(), mano_izd_.getZ(), centro.x, centro.z);
 }
 
-bool AccionGestoRotar::AccionGestoRotar::manoFuera(Mano mano) {
+bool AccionGestoRotar::manoFuera(Mano mano) {
 	// Calcula el radio actual de la mano
 	float radio_nuevo = distancia2D(mano.getX(), mano.getZ(), centro.x, centro.z);
 	// Devuelve si se sale del entorno de la circunferencia
@@ -233,21 +233,21 @@ bool AccionGestoRotar::AccionGestoRotar::manoFuera(Mano mano) {
 }
 
 float AccionGestoRotar::angulo(Mano mano1, Mano mano2) {
-	// Devolvemos el ángulo que forman dos manos (mano antigua y nueva) en la circunferencia
-	// Se hace considerando un triángulo con estos dos y el centro de la circunferncia.
-	float distancia_cuadrado = distancia2D(mano1.getX(), mano1.getZ(), mano2.getX(), mano2.getZ()) * 
+	// Devolvemos el ï¿½ngulo que forman dos manos (mano antigua y nueva) en la circunferencia
+	// Se hace considerando un triï¿½ngulo con estos dos y el centro de la circunferncia.
+	float distancia_cuadrado = distancia2D(mano1.getX(), mano1.getZ(), mano2.getX(), mano2.getZ()) *
 		distancia2D(mano1.getX(), mano1.getZ(), mano2.getX(), mano2.getZ());
 	return acos(1 - (distancia_cuadrado / (2 * radio * radio)));
 }
 
 void AccionGestoRotar::continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva) {
-	// Separación en el eje Y
+	// Separaciï¿½n en el eje Y
 	float separacion_Y = distancia(mano_izd_nueva.getY(), mano_der.getY());
 	// Si no se separa mucho del eje Y
 	bool dentroY = separacion_Y <= umbral_separacion;
-	// Si ambas manos están dentro de la circunferencia
+	// Si ambas manos estï¿½n dentro de la circunferencia
 	bool manosDentro = !manoFuera(mano_izd_nueva) && !manoFuera(mano_der_nueva);
-	// Si ambas manos forman un ángulo parecido
+	// Si ambas manos forman un ï¿½ngulo parecido
 	bool mismosAngulos = distancia(angulo(mano_izd_nueva, mano_izd), angulo(mano_der_nueva, mano_der)) <= umbral_angulo;
 	// Si el giro de cada mano es el contrario
 	bool direccionContraria = (mano_izd_nueva.getZ() - mano_izd.getZ()) * (mano_der_nueva.getZ() - mano_der.getZ()) <= 0;
@@ -255,15 +255,15 @@ void AccionGestoRotar::continuarGesto(Mano mano_izd_nueva, Mano mano_der_nueva) 
 	if (dentroY && manosDentro && mismosAngulos && direccionContraria) {
 		// Cogemos el menor angulo
 		int angulo_grad = min(angulo(mano_der_nueva, mano_der) * 180.0 / PI, angulo(mano_izd_nueva, mano_izd) * 180.0 / PI);
-	
+
 		if (angulo_grad > umbral_grados) {
-			// Espejo, ponemos el ángulo negativo para girar en el otro sentido
-			if (mano_der_nueva.getZ() - mano_der.getZ() > 0) 
+			// Espejo, ponemos el ï¿½ngulo negativo para girar en el otro sentido
+			if (mano_der_nueva.getZ() - mano_der.getZ() > 0)
 				angulo_grad = -angulo_grad;
 
 			mano_izd = mano_izd_nueva;
 			mano_der = mano_der_nueva;
-			
+
 			interfaz_grafica->rotar(angulo_grad * 1.5);
 		}
 	}

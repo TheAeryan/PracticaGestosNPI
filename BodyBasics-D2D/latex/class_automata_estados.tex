@@ -1,0 +1,86 @@
+\hypertarget{class_automata_estados}{}\doxysection{Automata\+Estados Class Reference}
+\label{class_automata_estados}\index{AutomataEstados@{AutomataEstados}}
+
+
+Clase que guarda el estado actual del sistema y realiza las transiciones según las nuevas posiciones y estados de las manos.  
+
+
+
+
+{\ttfamily \#include $<$Api\+Gestos.\+h$>$}
+
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_automata_estados_a8df7ab0fea64e0ea3852e0e74b5899f8}{Automata\+Estados}} ()
+\begin{DoxyCompactList}\small\item\em Constructor. El estado inicial del sistema es E\+S\+T\+A\+D\+O\+\_\+\+I\+N\+I\+C\+I\+AL. \end{DoxyCompactList}\item 
+Estado\+Gestos \mbox{\hyperlink{class_automata_estados_a199a49240f9df301d403a33a125479a5}{get\+Estado}} ()
+\begin{DoxyCompactList}\small\item\em Devuelve el estado actual del sistema. \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{class_automata_estados_ab8033acac960108ee0b76d104ec4bf0e}{transicion\+Estado}} (\mbox{\hyperlink{class_mano}{Mano}} mano\+\_\+izquierda, \mbox{\hyperlink{class_mano}{Mano}} mano\+\_\+derecha)
+\begin{DoxyCompactList}\small\item\em Ejecuta la transición dada por el diagrama de estados, cambiando el estado del sistema si es necesario. Devuelve true si el estado ha cambiado y false, si el estado es el mismo. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Clase que guarda el estado actual del sistema y realiza las transiciones según las nuevas posiciones y estados de las manos. 
+
+Mike, 19/12/2019. 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_automata_estados_a8df7ab0fea64e0ea3852e0e74b5899f8}\label{class_automata_estados_a8df7ab0fea64e0ea3852e0e74b5899f8}} 
+\index{AutomataEstados@{AutomataEstados}!AutomataEstados@{AutomataEstados}}
+\index{AutomataEstados@{AutomataEstados}!AutomataEstados@{AutomataEstados}}
+\doxysubsubsection{\texorpdfstring{AutomataEstados()}{AutomataEstados()}}
+{\footnotesize\ttfamily Automata\+Estados\+::\+Automata\+Estados (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor. El estado inicial del sistema es E\+S\+T\+A\+D\+O\+\_\+\+I\+N\+I\+C\+I\+AL. 
+
+Mike, 19/12/2019. 
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{class_automata_estados_a199a49240f9df301d403a33a125479a5}\label{class_automata_estados_a199a49240f9df301d403a33a125479a5}} 
+\index{AutomataEstados@{AutomataEstados}!getEstado@{getEstado}}
+\index{getEstado@{getEstado}!AutomataEstados@{AutomataEstados}}
+\doxysubsubsection{\texorpdfstring{getEstado()}{getEstado()}}
+{\footnotesize\ttfamily Estado\+Gestos Automata\+Estados\+::get\+Estado (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Devuelve el estado actual del sistema. 
+
+Mike, 19/12/2019. 
+
+\begin{DoxyReturn}{Returns}
+The estado. 
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_automata_estados_ab8033acac960108ee0b76d104ec4bf0e}\label{class_automata_estados_ab8033acac960108ee0b76d104ec4bf0e}} 
+\index{AutomataEstados@{AutomataEstados}!transicionEstado@{transicionEstado}}
+\index{transicionEstado@{transicionEstado}!AutomataEstados@{AutomataEstados}}
+\doxysubsubsection{\texorpdfstring{transicionEstado()}{transicionEstado()}}
+{\footnotesize\ttfamily bool Automata\+Estados\+::transicion\+Estado (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mano}{Mano}}}]{mano\+\_\+izquierda,  }\item[{\mbox{\hyperlink{class_mano}{Mano}}}]{mano\+\_\+derecha }\end{DoxyParamCaption})}
+
+
+
+Ejecuta la transición dada por el diagrama de estados, cambiando el estado del sistema si es necesario. Devuelve true si el estado ha cambiado y false, si el estado es el mismo. 
+
+Mike, 19/12/2019. 
+
+
+\begin{DoxyParams}{Parameters}
+{\em mano\+\_\+izquierda} & The mano izquierda. \\
+\hline
+{\em mano\+\_\+derecha} & The mano derecha. \\
+\hline
+\end{DoxyParams}
+
+
+\begin{DoxyReturn}{Returns}
+True if it succeeds, false if it fails. 
+\end{DoxyReturn}
+
+
+The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
+\item 
+Api\+Gestos.\+h\item 
+Api\+Gestos.\+cpp\end{DoxyCompactItemize}
