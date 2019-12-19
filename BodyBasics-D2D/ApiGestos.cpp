@@ -9,7 +9,6 @@ using namespace std::chrono;
 
 #define PI 3.14159265
 
-
 /* MANO */
 
 void Mano::setEstado(HandState handState, TrackingState trackingState) {
