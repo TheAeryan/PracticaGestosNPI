@@ -57,7 +57,7 @@ void model3D::cambiarAnio(int year_inc) {
 }
 
 void model3D::zoom(float factor) {
-    const float FACTOR = 2.0,
+    const float FACTOR = 2.0;
 
 	char texto_gesto[40];
 	sprintf(texto_gesto, "<Zoom> %.2f\n", factor);
