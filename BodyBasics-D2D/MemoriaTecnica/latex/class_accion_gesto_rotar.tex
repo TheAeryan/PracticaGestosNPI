@@ -1,0 +1,86 @@
+\hypertarget{class_accion_gesto_rotar}{}\doxysection{Referencia de la Clase Accion\+Gesto\+Rotar}
+\label{class_accion_gesto_rotar}\index{AccionGestoRotar@{AccionGestoRotar}}
+
+
+Clase que implementa la funcionalidad asociada al gesto G\+E\+S\+T\+O\+\_\+\+Z\+O\+OM.  
+
+
+
+
+{\ttfamily \#include $<$Api\+Gestos.\+h$>$}
+
+Diagrama de herencias de Accion\+Gesto\+Rotar\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_accion_gesto_rotar}
+\end{center}
+\end{figure}
+\doxysubsection*{M茅todos p煤blicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_accion_gesto_rotar_a3bd27ff7bbf1106f20ac276a0fb06e40}{Accion\+Gesto\+Rotar}} (\mbox{\hyperlink{class_mano}{Mano}} mano\+\_\+izd\+\_\+, \mbox{\hyperlink{class_mano}{Mano}} mano\+\_\+der\+\_\+, \mbox{\hyperlink{classmodel3_d}{model3D}} $\ast$interfaz\+\_\+grafica\+\_\+)
+\begin{DoxyCompactList}\small\item\em Constructor. Inicializamos las manos iniciales, la interfaz gr醘ica, y se establece el centro XZ con el punto medio en el plano XZ (centro de circunferencia) y el radio. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_accion_gesto_rotar_a48dada492c02f94b9f943f29d6d26cf9}{continuar\+Gesto}} (\mbox{\hyperlink{class_mano}{Mano}} mano\+\_\+izd\+\_\+nueva, \mbox{\hyperlink{class_mano}{Mano}} mano\+\_\+der\+\_\+nueva)
+\begin{DoxyCompactList}\small\item\em M閠odo para continuar el gesto. Se comprueba que las manos no se salgan del eje Y, est閚 en la circunferencia, formen el mismo 醤gulo y en sentido opuesto entre ellos. Si se cumple todo se rota el objeto, conforme el 醤gulo rotado. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Otros miembros heredados}
+
+
+\doxysubsection{Descripci贸n detallada}
+Clase que implementa la funcionalidad asociada al gesto G\+E\+S\+T\+O\+\_\+\+Z\+O\+OM. 
+
+Mike, 19/12/2019. 
+
+\doxysubsection{Documentaci贸n del constructor y destructor}
+\mbox{\Hypertarget{class_accion_gesto_rotar_a3bd27ff7bbf1106f20ac276a0fb06e40}\label{class_accion_gesto_rotar_a3bd27ff7bbf1106f20ac276a0fb06e40}} 
+\index{AccionGestoRotar@{AccionGestoRotar}!AccionGestoRotar@{AccionGestoRotar}}
+\index{AccionGestoRotar@{AccionGestoRotar}!AccionGestoRotar@{AccionGestoRotar}}
+\doxysubsubsection{\texorpdfstring{AccionGestoRotar()}{AccionGestoRotar()}}
+{\footnotesize\ttfamily Accion\+Gesto\+Rotar\+::\+Accion\+Gesto\+Rotar (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mano}{Mano}}}]{mano\+\_\+izd\+\_\+,  }\item[{\mbox{\hyperlink{class_mano}{Mano}}}]{mano\+\_\+der\+\_\+,  }\item[{\mbox{\hyperlink{classmodel3_d}{model3D}} $\ast$}]{interfaz\+\_\+grafica\+\_\+ }\end{DoxyParamCaption})}
+
+
+
+Constructor. Inicializamos las manos iniciales, la interfaz gr醘ica, y se establece el centro XZ con el punto medio en el plano XZ (centro de circunferencia) y el radio. 
+
+Mike, 19/12/2019. 
+
+
+\begin{DoxyParams}{Par谩metros}
+{\em mano\+\_\+izd\+\_\+} & The mano izd. \\
+\hline
+{\em mano\+\_\+der\+\_\+} & The mano der. \\
+\hline
+{\em interfaz\+\_\+grafica\+\_\+} & \mbox{[}in,out\mbox{]} If non-\/null, the interfaz grafica. \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Documentaci贸n de las funciones miembro}
+\mbox{\Hypertarget{class_accion_gesto_rotar_a48dada492c02f94b9f943f29d6d26cf9}\label{class_accion_gesto_rotar_a48dada492c02f94b9f943f29d6d26cf9}} 
+\index{AccionGestoRotar@{AccionGestoRotar}!continuarGesto@{continuarGesto}}
+\index{continuarGesto@{continuarGesto}!AccionGestoRotar@{AccionGestoRotar}}
+\doxysubsubsection{\texorpdfstring{continuarGesto()}{continuarGesto()}}
+{\footnotesize\ttfamily void Accion\+Gesto\+Rotar\+::continuar\+Gesto (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_mano}{Mano}}}]{mano\+\_\+izd\+\_\+nueva,  }\item[{\mbox{\hyperlink{class_mano}{Mano}}}]{mano\+\_\+der\+\_\+nueva }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+M閠odo para continuar el gesto. Se comprueba que las manos no se salgan del eje Y, est閚 en la circunferencia, formen el mismo 醤gulo y en sentido opuesto entre ellos. Si se cumple todo se rota el objeto, conforme el 醤gulo rotado. 
+
+Mike, 19/12/2019. 
+
+
+\begin{DoxyParams}{Par谩metros}
+{\em mano\+\_\+izd\+\_\+nueva} & The mano izd nueva. \\
+\hline
+{\em mano\+\_\+der\+\_\+nueva} & The mano der nueva. \\
+\hline
+\end{DoxyParams}
+
+
+Reimplementado de \mbox{\hyperlink{class_accion_gesto_a8036c095d46ed654f1b5fea69a1a7f93}{Accion\+Gesto}}.
+
+
+
+La documentaci贸n para esta clase fue generada a partir de los siguientes ficheros\+:\begin{DoxyCompactItemize}
+\item 
+Api\+Gestos.\+h\item 
+Api\+Gestos.\+cpp\end{DoxyCompactItemize}

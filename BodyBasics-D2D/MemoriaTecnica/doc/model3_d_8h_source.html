@@ -1,0 +1,171 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=9"/>
+<meta name="generator" content="Doxygen 1.8.16"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>NPI P2: Fichero Fuente model3D.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+  $(document).ready(initResizable);
+/* @license-end */</script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr style="height: 56px;">
+  <td id="projectalign" style="padding-left: 0.5em;">
+   <div id="projectname">NPI P2
+   </div>
+   <div id="projectbrief">InteracciÃ³n con modelos3D mediante gestos con Kinect One</div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Generado por Doxygen 1.8.16 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+var searchBox = new SearchBox("searchBox", "search",false,'Buscar');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(function() {
+  initMenu('',true,false,'search.php','Buscar');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:cf05388f2679ee054f2beb29a391d25f4e673ac3&amp;dn=gpl-2.0.txt GPL-v2 */
+$(document).ready(function(){initNavTree('model3_d_8h_source.html','');});
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle">
+<div class="title">model3D.h</div>  </div>
+</div><!--header-->
+<div class="contents">
+<div class="fragment"><div class="line"><a name="l00001"></a><span class="lineno">    1</span>&#160;<span class="preprocessor">#pragma once</span></div>
+<div class="line"><a name="l00002"></a><span class="lineno">    2</span>&#160; </div>
+<div class="line"><a name="l00003"></a><span class="lineno">    3</span>&#160;<span class="preprocessor">#include &lt;GL/glew.h&gt;</span></div>
+<div class="line"><a name="l00004"></a><span class="lineno">    4</span>&#160;<span class="preprocessor">#include &lt;GLFW/glfw3.h&gt;</span></div>
+<div class="line"><a name="l00005"></a><span class="lineno">    5</span>&#160; </div>
+<div class="line"><a name="l00011"></a><span class="lineno">   11</span>&#160; </div>
+<div class="line"><a name="l00012"></a><span class="lineno"><a class="line" href="classmodel3_d.html">   12</a></span>&#160;<span class="keyword">class </span><a class="code" href="classmodel3_d.html">model3D</a> {</div>
+<div class="line"><a name="l00013"></a><span class="lineno">   13</span>&#160;    <span class="keyword">private</span>:</div>
+<div class="line"><a name="l00014"></a><span class="lineno">   14</span>&#160; </div>
+<div class="line"><a name="l00020"></a><span class="lineno">   20</span>&#160; </div>
+<div class="line"><a name="l00021"></a><span class="lineno">   21</span>&#160;        <span class="keywordtype">int</span> actYear;</div>
+<div class="line"><a name="l00023"></a><span class="lineno">   23</span>&#160;        <span class="keywordtype">int</span> minYear = 1000;</div>
+<div class="line"><a name="l00025"></a><span class="lineno">   25</span>&#160;        <span class="keywordtype">int</span> maxYear = 2019;</div>
+<div class="line"><a name="l00027"></a><span class="lineno">   27</span>&#160;        <span class="keywordtype">float</span> ang_rotacion = 0;</div>
+<div class="line"><a name="l00029"></a><span class="lineno">   29</span>&#160;        <span class="keywordtype">float</span> escala = 1.0;</div>
+<div class="line"><a name="l00031"></a><span class="lineno">   31</span>&#160;        <span class="keywordtype">float</span> desplazamiento_marca = 0.0;</div>
+<div class="line"><a name="l00033"></a><span class="lineno">   33</span>&#160;        <span class="keywordtype">float</span> desplazamiento_x = 0.0;</div>
+<div class="line"><a name="l00035"></a><span class="lineno">   35</span>&#160;        <span class="keywordtype">float</span> desplazamiento_y = 0.0;</div>
+<div class="line"><a name="l00037"></a><span class="lineno">   37</span>&#160;        <span class="keywordtype">float</span> r = 1.0;</div>
+<div class="line"><a name="l00039"></a><span class="lineno">   39</span>&#160;        <span class="keywordtype">float</span> g = 1.0;</div>
+<div class="line"><a name="l00041"></a><span class="lineno">   41</span>&#160;        <span class="keywordtype">float</span> b = 1.0;</div>
+<div class="line"><a name="l00042"></a><span class="lineno">   42</span>&#160;        </div>
+<div class="line"><a name="l00043"></a><span class="lineno">   43</span>&#160;    <span class="keyword">public</span>:</div>
+<div class="line"><a name="l00044"></a><span class="lineno">   44</span>&#160; </div>
+<div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160; </div>
+<div class="line"><a name="l00051"></a><span class="lineno"><a class="line" href="classmodel3_d.html#af46a766c72d634f9b5a8934774b7b848">   51</a></span>&#160;        <a class="code" href="classmodel3_d.html#af46a766c72d634f9b5a8934774b7b848">model3D</a>() : actYear(1510) { }</div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160; </div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160; </div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classmodel3_d.html#a1d4a849151f39e51d71358a74da68705">setColor</a>(<span class="keywordtype">float</span> r, <span class="keywordtype">float</span> g, <span class="keywordtype">float</span> b);</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160; </div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160; </div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classmodel3_d.html#aac896fd19ed57a6ae5dc678a6f9a2fd8">desplazar</a>(<span class="keywordtype">float</span> desp_x, <span class="keywordtype">float</span> desp_y);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160; </div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160; </div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classmodel3_d.html#a02f5f118be3f4546f7bc498a16e2cf56">zoom</a>(<span class="keywordtype">float</span> factor);</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160; </div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160; </div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classmodel3_d.html#ae34aea5f75cabc5ffd0d00a7bdce4ad3">rotar</a>(<span class="keywordtype">int</span> grados);</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160; </div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160; </div>
+<div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classmodel3_d.html#a82735f590ee902179375cd4e07a16bb9">cambiarAnio</a>(<span class="keywordtype">int</span> year_inc);</div>
+<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160; </div>
+<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160; </div>
+<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classmodel3_d.html#a2dae555437f373f2e0dd391410cffce3">display</a>(GLFWwindow* window);</div>
+<div class="line"><a name="l00128"></a><span class="lineno">  128</span>&#160; </div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160; </div>
+<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classmodel3_d.html#a5fd407e1ea744032ab295cf2f1273f8b">drawObject</a>();</div>
+<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160; </div>
+<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160; </div>
+<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classmodel3_d.html#ad588fb021e322a9ef72dac832c5799f3">drawLineaTemporal</a>();</div>
+<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160; </div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160; </div>
+<div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;        <span class="keywordtype">void</span> <a class="code" href="classmodel3_d.html#af1f4916cccd8f156a8d8b2d4d1443bc8">drawMarcaTemporal</a>();</div>
+<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;};</div>
+<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160; </div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<div class="ttc" id="aclassmodel3_d_html_ad588fb021e322a9ef72dac832c5799f3"><div class="ttname"><a href="classmodel3_d.html#ad588fb021e322a9ef72dac832c5799f3">model3D::drawLineaTemporal</a></div><div class="ttdeci">void drawLineaTemporal()</div><div class="ttdoc">Dibuja la línea temporal, un rectángulo por la parte de arriba de la ventana.</div><div class="ttdef"><b>Definition:</b> model3D.cpp:171</div></div>
+<div class="ttc" id="aclassmodel3_d_html_ae34aea5f75cabc5ffd0d00a7bdce4ad3"><div class="ttname"><a href="classmodel3_d.html#ae34aea5f75cabc5ffd0d00a7bdce4ad3">model3D::rotar</a></div><div class="ttdeci">void rotar(int grados)</div><div class="ttdoc">Gesto para rotar (según el eje Y). Si 'grados' es positivo, se rota en el sentido de las agujas del reloj...</div><div class="ttdef"><b>Definition:</b> model3D.cpp:76</div></div>
+<div class="ttc" id="aclassmodel3_d_html_a1d4a849151f39e51d71358a74da68705"><div class="ttname"><a href="classmodel3_d.html#a1d4a849151f39e51d71358a74da68705">model3D::setColor</a></div><div class="ttdeci">void setColor(float r, float g, float b)</div><div class="ttdoc">Establece el color actual del modelo.</div><div class="ttdef"><b>Definition:</b> model3D.cpp:93</div></div>
+<div class="ttc" id="aclassmodel3_d_html_a02f5f118be3f4546f7bc498a16e2cf56"><div class="ttname"><a href="classmodel3_d.html#a02f5f118be3f4546f7bc498a16e2cf56">model3D::zoom</a></div><div class="ttdeci">void zoom(float factor)</div><div class="ttdoc">Gesto de agrandar/achicar (hacer zoom). Si 'factor' está entre 0 y 1, se achica y si es mayor que 1 se ...</div><div class="ttdef"><b>Definition:</b> model3D.cpp:59</div></div>
+<div class="ttc" id="aclassmodel3_d_html_a5fd407e1ea744032ab295cf2f1273f8b"><div class="ttname"><a href="classmodel3_d.html#a5fd407e1ea744032ab295cf2f1273f8b">model3D::drawObject</a></div><div class="ttdeci">void drawObject()</div><div class="ttdoc">Dibuja el objeto en la escena, y le aplica las transformaciones correspondientes según los valores que te...</div><div class="ttdef"><b>Definition:</b> model3D.cpp:99</div></div>
+<div class="ttc" id="aclassmodel3_d_html_af46a766c72d634f9b5a8934774b7b848"><div class="ttname"><a href="classmodel3_d.html#af46a766c72d634f9b5a8934774b7b848">model3D::model3D</a></div><div class="ttdeci">model3D()</div><div class="ttdoc">Constructor.</div><div class="ttdef"><b>Definition:</b> model3D.h:51</div></div>
+<div class="ttc" id="aclassmodel3_d_html_a2dae555437f373f2e0dd391410cffce3"><div class="ttname"><a href="classmodel3_d.html#a2dae555437f373f2e0dd391410cffce3">model3D::display</a></div><div class="ttdeci">void display(GLFWwindow *window)</div><div class="ttdoc">Imprime en la ventana que se le pasa la escena de los objetos. Se colorea el fondo de verde,...</div><div class="ttdef"><b>Definition:</b> model3D.cpp:141</div></div>
+<div class="ttc" id="aclassmodel3_d_html_a82735f590ee902179375cd4e07a16bb9"><div class="ttname"><a href="classmodel3_d.html#a82735f590ee902179375cd4e07a16bb9">model3D::cambiarAnio</a></div><div class="ttdeci">void cambiarAnio(int year_inc)</div><div class="ttdoc">Gesto para avanzar/retroceder el año actual (actYear). Si 'year_inc' es positivo se avanza ese número de años y...</div><div class="ttdef"><b>Definition:</b> model3D.cpp:33</div></div>
+<div class="ttc" id="aclassmodel3_d_html_af1f4916cccd8f156a8d8b2d4d1443bc8"><div class="ttname"><a href="classmodel3_d.html#af1f4916cccd8f156a8d8b2d4d1443bc8">model3D::drawMarcaTemporal</a></div><div class="ttdeci">void drawMarcaTemporal()</div><div class="ttdoc">Dibuja la marca temporal, que empieza en el centro de la línea temporal.</div><div class="ttdef"><b>Definition:</b> model3D.cpp:219</div></div>
+<div class="ttc" id="aclassmodel3_d_html"><div class="ttname"><a href="classmodel3_d.html">model3D</a></div><div class="ttdoc">A model 3d.</div><div class="ttdef"><b>Definition:</b> model3D.h:12</div></div>
+<div class="ttc" id="aclassmodel3_d_html_aac896fd19ed57a6ae5dc678a6f9a2fd8"><div class="ttname"><a href="classmodel3_d.html#aac896fd19ed57a6ae5dc678a6f9a2fd8">model3D::desplazar</a></div><div class="ttdeci">void desplazar(float desp_x, float desp_y)</div><div class="ttdoc">Gesto de mover el modelo. Se puede mover en el eje x e y.</div><div class="ttdef"><b>Definition:</b> model3D.cpp:16</div></div>
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><b>model3D.h</b></li>
+    <li class="footer">Generado por
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.16 </li>
+  </ul>
+</div>
+</body>
+</html>

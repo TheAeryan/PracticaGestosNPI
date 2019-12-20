@@ -1,0 +1,199 @@
+\hypertarget{classmodel3_d}{}\doxysection{Referencia de la Clase model3D}
+\label{classmodel3_d}\index{model3D@{model3D}}
+
+
+A model 3d.  
+
+
+
+
+{\ttfamily \#include $<$model3\+D.\+h$>$}
+
+\doxysubsection*{MÃ©todos pÃºblicos}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmodel3_d_af46a766c72d634f9b5a8934774b7b848}{model3D}} ()
+\begin{DoxyCompactList}\small\item\em Constructor. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmodel3_d_a1d4a849151f39e51d71358a74da68705}{set\+Color}} (float r, float g, float b)
+\begin{DoxyCompactList}\small\item\em Establece el color actual del modelo. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmodel3_d_aac896fd19ed57a6ae5dc678a6f9a2fd8}{desplazar}} (float desp\+\_\+x, float desp\+\_\+y)
+\begin{DoxyCompactList}\small\item\em Gesto de mover el modelo. Se puede mover en el eje x e y. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmodel3_d_a02f5f118be3f4546f7bc498a16e2cf56}{zoom}} (float factor)
+\begin{DoxyCompactList}\small\item\em Gesto de agrandar/achicar (hacer zoom). Si \textquotesingle{}factor\textquotesingle{} está entre 0 y 1, se achica y si es mayor que 1 se agranda según \textquotesingle{}factor\textquotesingle{}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmodel3_d_ae34aea5f75cabc5ffd0d00a7bdce4ad3}{rotar}} (int grados)
+\begin{DoxyCompactList}\small\item\em Gesto para rotar (según el eje Y). Si \textquotesingle{}grados\textquotesingle{} es positivo, se rota en el sentido de las agujas del reloj y si es negativo, se rota en sentido contrario. Los grados son sexagesimales. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmodel3_d_a82735f590ee902179375cd4e07a16bb9}{cambiar\+Anio}} (int year\+\_\+inc)
+\begin{DoxyCompactList}\small\item\em Gesto para avanzar/retroceder el año actual (act\+Year). Si \textquotesingle{}year\+\_\+inc\textquotesingle{} es positivo se avanza ese número de años y si es negativo se retrocede ese número de años. Hace falta comprobar después, que act\+Year está dentro del rango \mbox{[}1000, 2019\mbox{]}. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmodel3_d_a2dae555437f373f2e0dd391410cffce3}{display}} (G\+L\+F\+Wwindow $\ast$window)
+\begin{DoxyCompactList}\small\item\em Imprime en la ventana que se le pasa la escena de los objetos. Se colorea el fondo de verde, el objeto, la línea temporal y la marca temporal. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmodel3_d_a5fd407e1ea744032ab295cf2f1273f8b}{draw\+Object}} ()
+\begin{DoxyCompactList}\small\item\em Dibuja el objeto en la escena, y le aplica las transformaciones correspondientes según los valores que tenga guardados actualmente. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmodel3_d_ad588fb021e322a9ef72dac832c5799f3}{draw\+Linea\+Temporal}} ()
+\begin{DoxyCompactList}\small\item\em Dibuja la línea temporal, un rectángulo por la parte de arriba de la ventana. \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classmodel3_d_af1f4916cccd8f156a8d8b2d4d1443bc8}{draw\+Marca\+Temporal}} ()
+\begin{DoxyCompactList}\small\item\em Dibuja la marca temporal, que empieza en el centro de la línea temporal. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{DescripciÃ³n detallada}
+A model 3d. 
+
+Mike, 19/12/2019. 
+
+\doxysubsection{DocumentaciÃ³n del constructor y destructor}
+\mbox{\Hypertarget{classmodel3_d_af46a766c72d634f9b5a8934774b7b848}\label{classmodel3_d_af46a766c72d634f9b5a8934774b7b848}} 
+\index{model3D@{model3D}!model3D@{model3D}}
+\index{model3D@{model3D}!model3D@{model3D}}
+\doxysubsubsection{\texorpdfstring{model3D()}{model3D()}}
+{\footnotesize\ttfamily model3\+D\+::model3D (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Constructor. 
+
+Mike, 19/12/2019. 
+
+\doxysubsection{DocumentaciÃ³n de las funciones miembro}
+\mbox{\Hypertarget{classmodel3_d_a82735f590ee902179375cd4e07a16bb9}\label{classmodel3_d_a82735f590ee902179375cd4e07a16bb9}} 
+\index{model3D@{model3D}!cambiarAnio@{cambiarAnio}}
+\index{cambiarAnio@{cambiarAnio}!model3D@{model3D}}
+\doxysubsubsection{\texorpdfstring{cambiarAnio()}{cambiarAnio()}}
+{\footnotesize\ttfamily void model3\+D\+::cambiar\+Anio (\begin{DoxyParamCaption}\item[{int}]{year\+\_\+inc }\end{DoxyParamCaption})}
+
+
+
+Gesto para avanzar/retroceder el año actual (act\+Year). Si \textquotesingle{}year\+\_\+inc\textquotesingle{} es positivo se avanza ese número de años y si es negativo se retrocede ese número de años. Hace falta comprobar después, que act\+Year está dentro del rango \mbox{[}1000, 2019\mbox{]}. 
+
+Mike, 19/12/2019. 
+
+
+\begin{DoxyParams}{ParÃ¡metros}
+{\em year\+\_\+inc} & The year increment. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmodel3_d_aac896fd19ed57a6ae5dc678a6f9a2fd8}\label{classmodel3_d_aac896fd19ed57a6ae5dc678a6f9a2fd8}} 
+\index{model3D@{model3D}!desplazar@{desplazar}}
+\index{desplazar@{desplazar}!model3D@{model3D}}
+\doxysubsubsection{\texorpdfstring{desplazar()}{desplazar()}}
+{\footnotesize\ttfamily void model3\+D\+::desplazar (\begin{DoxyParamCaption}\item[{float}]{desp\+\_\+x,  }\item[{float}]{desp\+\_\+y }\end{DoxyParamCaption})}
+
+
+
+Gesto de mover el modelo. Se puede mover en el eje x e y. 
+
+Mike, 19/12/2019. 
+
+
+\begin{DoxyParams}{ParÃ¡metros}
+{\em desp\+\_\+x} & The desp x coordinate. \\
+\hline
+{\em desp\+\_\+y} & The desp y coordinate. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmodel3_d_a2dae555437f373f2e0dd391410cffce3}\label{classmodel3_d_a2dae555437f373f2e0dd391410cffce3}} 
+\index{model3D@{model3D}!display@{display}}
+\index{display@{display}!model3D@{model3D}}
+\doxysubsubsection{\texorpdfstring{display()}{display()}}
+{\footnotesize\ttfamily void model3\+D\+::display (\begin{DoxyParamCaption}\item[{G\+L\+F\+Wwindow $\ast$}]{window }\end{DoxyParamCaption})}
+
+
+
+Imprime en la ventana que se le pasa la escena de los objetos. Se colorea el fondo de verde, el objeto, la línea temporal y la marca temporal. 
+
+Mike, 19/12/2019. 
+
+
+\begin{DoxyParams}{ParÃ¡metros}
+{\em window} & \mbox{[}in,out\mbox{]} If non-\/null, the window. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmodel3_d_ad588fb021e322a9ef72dac832c5799f3}\label{classmodel3_d_ad588fb021e322a9ef72dac832c5799f3}} 
+\index{model3D@{model3D}!drawLineaTemporal@{drawLineaTemporal}}
+\index{drawLineaTemporal@{drawLineaTemporal}!model3D@{model3D}}
+\doxysubsubsection{\texorpdfstring{drawLineaTemporal()}{drawLineaTemporal()}}
+{\footnotesize\ttfamily void model3\+D\+::draw\+Linea\+Temporal (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Dibuja la línea temporal, un rectángulo por la parte de arriba de la ventana. 
+
+Mike, 19/12/2019. \mbox{\Hypertarget{classmodel3_d_af1f4916cccd8f156a8d8b2d4d1443bc8}\label{classmodel3_d_af1f4916cccd8f156a8d8b2d4d1443bc8}} 
+\index{model3D@{model3D}!drawMarcaTemporal@{drawMarcaTemporal}}
+\index{drawMarcaTemporal@{drawMarcaTemporal}!model3D@{model3D}}
+\doxysubsubsection{\texorpdfstring{drawMarcaTemporal()}{drawMarcaTemporal()}}
+{\footnotesize\ttfamily void model3\+D\+::draw\+Marca\+Temporal (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Dibuja la marca temporal, que empieza en el centro de la línea temporal. 
+
+Mike, 19/12/2019. \mbox{\Hypertarget{classmodel3_d_a5fd407e1ea744032ab295cf2f1273f8b}\label{classmodel3_d_a5fd407e1ea744032ab295cf2f1273f8b}} 
+\index{model3D@{model3D}!drawObject@{drawObject}}
+\index{drawObject@{drawObject}!model3D@{model3D}}
+\doxysubsubsection{\texorpdfstring{drawObject()}{drawObject()}}
+{\footnotesize\ttfamily void model3\+D\+::draw\+Object (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Dibuja el objeto en la escena, y le aplica las transformaciones correspondientes según los valores que tenga guardados actualmente. 
+
+Mike, 19/12/2019. \mbox{\Hypertarget{classmodel3_d_ae34aea5f75cabc5ffd0d00a7bdce4ad3}\label{classmodel3_d_ae34aea5f75cabc5ffd0d00a7bdce4ad3}} 
+\index{model3D@{model3D}!rotar@{rotar}}
+\index{rotar@{rotar}!model3D@{model3D}}
+\doxysubsubsection{\texorpdfstring{rotar()}{rotar()}}
+{\footnotesize\ttfamily void model3\+D\+::rotar (\begin{DoxyParamCaption}\item[{int}]{grados }\end{DoxyParamCaption})}
+
+
+
+Gesto para rotar (según el eje Y). Si \textquotesingle{}grados\textquotesingle{} es positivo, se rota en el sentido de las agujas del reloj y si es negativo, se rota en sentido contrario. Los grados son sexagesimales. 
+
+Mike, 19/12/2019. 
+
+
+\begin{DoxyParams}{ParÃ¡metros}
+{\em grados} & The grados. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmodel3_d_a1d4a849151f39e51d71358a74da68705}\label{classmodel3_d_a1d4a849151f39e51d71358a74da68705}} 
+\index{model3D@{model3D}!setColor@{setColor}}
+\index{setColor@{setColor}!model3D@{model3D}}
+\doxysubsubsection{\texorpdfstring{setColor()}{setColor()}}
+{\footnotesize\ttfamily void model3\+D\+::set\+Color (\begin{DoxyParamCaption}\item[{float}]{r,  }\item[{float}]{g,  }\item[{float}]{b }\end{DoxyParamCaption})}
+
+
+
+Establece el color actual del modelo. 
+
+Mike, 19/12/2019. 
+
+
+\begin{DoxyParams}{ParÃ¡metros}
+{\em r} & A float to process. \\
+\hline
+{\em g} & A float to process. \\
+\hline
+{\em b} & A float to process. \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{classmodel3_d_a02f5f118be3f4546f7bc498a16e2cf56}\label{classmodel3_d_a02f5f118be3f4546f7bc498a16e2cf56}} 
+\index{model3D@{model3D}!zoom@{zoom}}
+\index{zoom@{zoom}!model3D@{model3D}}
+\doxysubsubsection{\texorpdfstring{zoom()}{zoom()}}
+{\footnotesize\ttfamily void model3\+D\+::zoom (\begin{DoxyParamCaption}\item[{float}]{factor }\end{DoxyParamCaption})}
+
+
+
+Gesto de agrandar/achicar (hacer zoom). Si \textquotesingle{}factor\textquotesingle{} está entre 0 y 1, se achica y si es mayor que 1 se agranda según \textquotesingle{}factor\textquotesingle{}. 
+
+Mike, 19/12/2019. 
+
+
+\begin{DoxyParams}{ParÃ¡metros}
+{\em factor} & The factor. \\
+\hline
+\end{DoxyParams}
+
+
+La documentaciÃ³n para esta clase fue generada a partir de los siguientes ficheros\+:\begin{DoxyCompactItemize}
+\item 
+model3\+D.\+h\item 
+model3\+D.\+cpp\end{DoxyCompactItemize}
